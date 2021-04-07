@@ -23,7 +23,7 @@ int main(void) {
 	
 	unsigned char temp = 0;
 	while(1){
-	    temp = PINA;
+	    temp = PINA & 0x0F;
 	    if(temp == 0){
 		PORTC = 0x40; 
 	    }
