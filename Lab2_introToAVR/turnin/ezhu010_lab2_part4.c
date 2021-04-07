@@ -30,7 +30,7 @@ int main(void) {
 		PORTD = (total >> 2) | PORTD;
 		PORTD = (PORTD & 0xFC); 
 		if(total > 140){
-		    PORTD = PORTD + 1;
+		    PORTD = PORTD | 0x01;
    		}
 		if((weight1 - weight3) > 80 || (weight3 - weight1) > 80){
 		   PORTD = PORTD | 0x02;
