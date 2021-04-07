@@ -28,7 +28,7 @@ int main(void) {
 		weight3 = PINC;
 	        total = weight1 + weight2 + weight3;
 		PORTD = (total >> 2) | PORTD;
-		PORTD = (PORTD & 0x03); 
+		PORTD = (PORTD & 0xFC); 
 		if(total > 140){
 		    PORTD = PORTD + 1;
    		}
