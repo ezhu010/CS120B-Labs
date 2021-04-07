@@ -19,7 +19,7 @@ int main(void) {
         PORTA = 0xFF;
         PORTC = 0x00;
 
-        unsigned char temp = 0;
+        unsigned char cntavail  = 0;
         while(1){
 	/*
 	 temp = PINA;
