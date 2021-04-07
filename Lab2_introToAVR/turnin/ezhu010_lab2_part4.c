@@ -27,13 +27,14 @@ int main(void) {
 		weight2 = PINB;
 		weight3 = PINC;
 	        total = weight1 + weight2 + weight3;
+		PORTD = (total >> 2) | PORTD;
+		PORTD = (PORTD & 0x03); 
 		if(total > 140){
 		    PORTD = PORTD + 1;
    		}
 		if((weight1 - weight3) > 80 || (weight3 - weight1) > 80){
 		   PORTD = PORTD | 0x02;
 		} 
-		PORTD = total << 2; 			
 	}
 
 	return 0;
