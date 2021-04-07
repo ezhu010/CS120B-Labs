@@ -13,29 +13,30 @@
 #endif
 
 int main(void) {
-	DDRA = 0x00;
-	DDRB = 0x0F;
-	unsigned char temp = 0;
- 
-	while(1){
-		
-	   temp = PINA;
-	   if(temp == 0){
-		PORTB = 0x00;
+
+        DDRA = 0x00;
+        DDRC = 0xFF;
+        PORTA = 0xFF;
+        PORTC = 0x00;
+
+        unsigned char temp = 0;
+        while(1){
+	/*
+	 temp = PINA;
+	 if(temp == 0x0F){
+		PORTC = 0x80;
 	   }
-	   else if(temp == 1){
-		PORTB = 0x01;
+	 else{
+	        PORTC = !(PINA & 0x01)*1 + !(PINA & 0x02) * 2 + !(PINA & 0x04) * 4 + !(PINA & 0x08) * 8;
+	    } 
+	*/
+           cntavail =!(PINA & 0x01) + !(PINA & 0x02) + !(PINA & 0x04) + !(PINA & 0x08);
+	   if(cntavail == 0){
+		PORTC = 0x80;
+	   }
+           else{
+           PORTC = cntavail;
 	  }
-	  else if(temp == 2){
-		PORTB = 0x00;
-	  }
-	  else if(temp == 3){
-		PORTB = 0x00;
-	  }
-
-	}
-	
-	return 0;
-
-
+        }
+        return 0;
 }
