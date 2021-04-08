@@ -31,7 +31,7 @@ int main(void) {
 	        if(total >= 0x46){
 		   PORTB = 0x02;
 	        }
-	        else if(total > 5 && total <= 70){
+	        else if(total > 5 && total < 70){
 		   PORTB = 0x04;
 	       }
 		else{
