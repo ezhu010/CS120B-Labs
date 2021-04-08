@@ -23,7 +23,7 @@ int main(void) {
 	DDRD = 0x00; PORTD = 0xFF;
 	unsigned char temp = 0;
 	unsigned char temp2 = 0;
-	unsigned char total = 0;
+	unsigned short  total = 0;
 	while(1){
 		temp = PIND;
 		temp2 = PINB;
