@@ -28,7 +28,7 @@ int main(void) {
 		temp = PIND;
 		temp2 = PINB;
 		total = (temp << 1) | (temp2 & 0x01);
-	        if(total >= 0x46){
+	        if(total >= 0x046){
 		   PORTB = 0x02;
 	        }
 	        else if(total > 5 && total < 70){
