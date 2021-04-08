@@ -19,7 +19,7 @@ unsigned char GetBit(unsigned char x, unsigned char k){
 
 int main(void) {
 	
-	DDRB = 0x01; PORTB = 0x00;
+	DDRB = 0x06; PORTB = 0x00;
 	DDRD = 0x00; PORTD = 0xFF;
 	unsigned char temp = 0;
 	unsigned char temp2 = 0;
