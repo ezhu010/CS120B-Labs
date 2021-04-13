@@ -84,7 +84,7 @@ void COUNTER_SM_TICK(){
 
 	       case COUNTER_INCRE:
 		     if(PORTC < 0x09){
-			    PORTC = PORTC = 1;
+			    PORTC = PORTC + 1;
 		     }
 		     else{
 			    PORTC = 0x09;
