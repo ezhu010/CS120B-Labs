@@ -29,7 +29,7 @@ void LED_SM(){
 		   LED_STATES = LED_LIGHT_ONE;
 	     }
 	     if(PINA == 0x01){
-		   LED_STATES = LED_LIGHT_TWO;
+		   LED_STATES = LED_WAIT_ONE;
 	    }
 	    break;
 	
@@ -44,10 +44,10 @@ void LED_SM(){
 	
 	case LED_WAIT_TWO:
             if(PINA == 0x01){
-                   LED_STATES = LED_WAIT_TWO;
+                   LED_STATES = LED_LIGHT_ONE;
             }
             if(PINA == 0x00){
-                   LED_STATES = LED_LIGHT_ONE;
+                   LED_STATES = LED_WAIT_TWO;
             }
             break;
 
@@ -56,7 +56,7 @@ void LED_SM(){
 		   LED_STATES = LED_LIGHT_TWO;	
 	     }	
 	     if(PINA == 0x01){
-		   LED_STATES = LED_LIGHT_ONE;
+		   LED_STATES = LED_WAIT_TWO;
 	    }
 	    break; 
 
@@ -92,7 +92,7 @@ int main(void) {
 	DDRA = 0x00;
 	PORTA = 0x00; 
 	DDRB = 0xFF;
-	PORTB = 0X01;
+	PORTB = 0X00;
 	LED_STATES = LED_START;
 	while(1){
 	     LED_SM();
