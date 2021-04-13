@@ -14,7 +14,7 @@
 
 
 
-enum LED_STATES {LED_START, LED_LIGHT_ONE, LED_WAIT, LED_LIGHT_TWO} LED_STATES;
+enum LED_STATES {LED_START, LED_LIGHT_ONE,LED_LIGHT_TWO} LED_STATES;
 
 
 void LED_SM(){
@@ -29,10 +29,10 @@ void LED_SM(){
 		   LED_STATES = LED_LIGHT_ONE;
 	     }
 	     if(PINA == 0x01){
-		   LED_STATES = LED_WAIT;
+		   LED_STATES = LED_LIGHT_TWO;
 	    }
 	    break;
-	
+	/*
 	case LED_WAIT:
 	    if(PINA == 0x01){
 		   LED_STATES = LED_WAIT;
@@ -41,7 +41,7 @@ void LED_SM(){
 		   LED_STATES = LED_LIGHT_TWO;
 	    }
 	    break;
-	
+	*/
 	case LED_LIGHT_TWO:
 	    if(PINA == 0x00){
 		   LED_STATES = LED_LIGHT_TWO;	
@@ -59,9 +59,9 @@ void LED_SM(){
 	case LED_LIGHT_ONE:
 	    PORTB = 0x01;
 	    break;
-	case LED_WAIT:
-	    PORTB = 0x02;
-	    break;
+       //   case LED_WAIT:
+       //   PORTB = 0x02;
+	 // break;
 	case LED_LIGHT_TWO:
 	    PORTB = 0x02;
 	    break;
