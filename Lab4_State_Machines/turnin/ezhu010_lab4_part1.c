@@ -57,7 +57,7 @@ void LED_SM(){
 	     PORTB = 0x01;
 	     break;
 	case LED_LIGHT_ONE:
-	    PORTB = 0x02;
+	    PORTB = 0x01;
 	    break;
 	case LED_WAIT:
 	    PORTB = 0x02;
