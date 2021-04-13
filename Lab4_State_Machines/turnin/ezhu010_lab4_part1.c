@@ -43,10 +43,10 @@ void LED_SM(){
 	    break;
 	
 	case LED_WAIT_TWO:
-            if(PINA == 0x01){
+            if(PINA == 0x00){
                    LED_STATES = LED_LIGHT_ONE;
             }
-            if(PINA == 0x00){
+            if(PINA == 0x01){
                    LED_STATES = LED_WAIT_TWO;
             }
             break;
