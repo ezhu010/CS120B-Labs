@@ -20,6 +20,10 @@ void COUNTER_SM_TICK(){
 	
 	switch(COUNTER_STATE){
 		case COUNTER_BEGIN:
+		     PORTC = 0x07;
+		     if(PINA == 0x01){
+			  PORTC = PORTC + 1;
+		     }
 		     COUNTER_STATE = COUNTER_INIT;
 	   	     break;
 	
@@ -79,7 +83,6 @@ void COUNTER_SM_TICK(){
 	
 
 	       case COUNTER_INIT:
-		     PORTC = 0x07;
 		     break;
 
 	       case COUNTER_INCRE:
