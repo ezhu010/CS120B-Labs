@@ -4,7 +4,7 @@
  *	Assignment: Lab 4  Exercise 1
  *	Exercise Description: [optional - include for your own benefit]
  *
- *	I acknowledge all content contained herein, excluding template or example
+ *	IA: acknowledge all content contained herein, excluding template or example
  *	code, is my own original work.
  */
 #include <avr/io.h>
@@ -14,7 +14,7 @@
 
 
 
-enum LED_STATES {LED_START, LED_LIGHT_ONE,LED_LIGHT_TWO} LED_STATES;
+enum LED_STATES {LED_START, LED_LIGHT_ONE,LED_LIGHT_TWO, LED_WAIT_ONE, LED_WAIT_TWO} LED_STATES;
 
 
 void LED_SM(){
@@ -32,16 +32,25 @@ void LED_SM(){
 		   LED_STATES = LED_LIGHT_TWO;
 	    }
 	    break;
-	/*
-	case LED_WAIT:
+	
+	case LED_WAIT_ONE:
 	    if(PINA == 0x01){
-		   LED_STATES = LED_WAIT;
+		   LED_STATES = LED_WAIT_ONE;
 	    }
 	    if(PINA == 0x00){
 		   LED_STATES = LED_LIGHT_TWO;
 	    }
 	    break;
-	*/
+	
+	case LED_WAIT_TWO:
+            if(PINA == 0x01){
+                   LED_STATES = LED_WAIT_TWO;
+            }
+            if(PINA == 0x00){
+                   LED_STATES = LED_LIGHT_ONE;
+            }
+            break;
+
 	case LED_LIGHT_TWO:
 	    if(PINA == 0x00){
 		   LED_STATES = LED_LIGHT_TWO;	
@@ -50,18 +59,26 @@ void LED_SM(){
 		   LED_STATES = LED_LIGHT_ONE;
 	    }
 	    break; 
+
+	default:
+	     LED_STATES = LED_START;
+      	     break; 
 	}
 
     switch(LED_STATES){
-	case LED_START:
+         case LED_START:
 	     PORTB = 0x01;
 	     break;
 	case LED_LIGHT_ONE:
 	    PORTB = 0x01;
 	    break;
-       //   case LED_WAIT:
-       //   PORTB = 0x02;
-	 // break;
+       case LED_WAIT_ONE:
+            PORTB = 0x02;
+	    break;
+       case LED_WAIT_TWO:
+	    PORTB = 0x01;
+            break;
+
 	case LED_LIGHT_TWO:
 	    PORTB = 0x02;
 	    break;
