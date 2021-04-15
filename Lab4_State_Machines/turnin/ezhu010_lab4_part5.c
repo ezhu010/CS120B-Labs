@@ -1,13 +1,13 @@
 
 /*	Author: Edward Zhu
- *	 *  Partner(s) Name: 
- *	  *	Lab Section:
- *	   *	Assignment: Lab 4  Exercise 4
- *	    *	Exercise Description: [optional - include for your own benefit]
- *	     *
- *	      *	I acknowledge all content contained herein, excluding template or example
- *	       *	code, is my own original work.
- *	        */
+ *	 *	 *  Partner(s) Name: 
+ *	  *	  *	Lab Section:
+ *	   *	   *	Assignment: Lab 4  Exercise 4
+ *	    *	    *	Exercise Description: [optional - include for your own benefit]
+ *	     *	     *
+ *	      *	      *	I acknowledge all content contained herein, excluding template or example
+ *	       *	       *	code, is my own original work.
+ *	        *	        */
 
 #include <avr/io.h>
 #ifdef _SIMULATE_
@@ -80,8 +80,18 @@ int main(void)
 }
 
 //{'inputs' : [('PINA', 0x00)], 'iterations' : 3},
+<<<<<<< HEAD
 // {'inputs' : [('PINA', 0x01)], 'iterations' : 2},
 // {'inputs' : [('PINA', 0x00)], 'iterations' : 3},
 // {'inputs' : [('PINA', 0x02)], 'iterations' : 2},
 // {'inputs' : [('PINA', 0x00)], 'iterations' : 2},
 // {'inputs' : [('PINA', 0x01)], 'iterations' : 2},
+=======
+//// {'inputs' : [('PINA', 0x01)], 'iterations' : 2},
+//// {'inputs' : [('PINA', 0x00)], 'iterations' : 3},
+//// {'inputs' : [('PINA', 0x02)], 'iterations' : 2},
+//// {'inputs' : [('PINA', 0x00)], 'iterations' : 2},
+//// {'inputs' : [('PINA', 0x01)], 'iterations' : 2},
+
+
+>>>>>>> 9de0a3a733e50e0775d2e94825a1c578c19e39e7
