@@ -1,13 +1,13 @@
 
 /*	Author: Edward Zhu
- *  Partner(s) Name: 
- *	Lab Section:
- *	Assignment: Lab 4  Exercise 4
- *	Exercise Description: [optional - include for your own benefit]
- *
- *	I acknowledge all content contained herein, excluding template or example
- *	code, is my own original work.
- */
+ *	 *  Partner(s) Name: 
+ *	  *	Lab Section:
+ *	   *	Assignment: Lab 4  Exercise 4
+ *	    *	Exercise Description: [optional - include for your own benefit]
+ *	     *
+ *	      *	I acknowledge all content contained herein, excluding template or example
+ *	       *	code, is my own original work.
+ *	        */
 
 #include <avr/io.h>
 #ifdef _SIMULATE_
@@ -28,9 +28,9 @@ int i = 0;
 void DOOR_SM()
 {
     switch (DOOR_STATE)
-    { // Transitions
+    { 
     case DOOR_START:
-        DOOR_STATE = LOCK;
+        DOOR_STATE = DOOR_LOCK;
         break;
     case DOOR_LOCK:
         if (PINA != 0x00)
@@ -44,7 +44,7 @@ void DOOR_SM()
             DOOR_STATE = DOOR_LOCK;
         }
         else if (PINA != 0x00)
-        { // if any button is pressed
+        { 
             DOOR_STATE = DOOR_PASS;
         }
         break;
@@ -61,7 +61,7 @@ void DOOR_SM()
                 DOOR_STATE = DOOR_LOCK;
             }
             else
-            { // fails sequence
+            { 
                 DOOR_STATE = DOOR_UNLOCK;
             }
         }
@@ -113,13 +113,16 @@ void DOOR_SM()
 
 int main()
 {
-    state = START;
     DDRA = 0x00;
     PORTA = 0xFF;
     DDRB = 0xFF;
     PORTB = 0x00;
+     DOOR_STATE = DOOR_START;
     while (1)
     {
         DOOR_SM();
     }
 }
+
+
+
