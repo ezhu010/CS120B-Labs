@@ -1,4 +1,5 @@
 
+
 /*	Author: Edward Zhu
  *	 *	 *	 *  Partner(s) Name: 
  *	  *	  *	  *	Lab Section:
@@ -21,7 +22,7 @@ enum DOOR_STATES
     DOOR_WAIT,
 } DOOR_STATE;
 unsigned char count = 0;
-unsigned char arr[4];
+unsigned char arr[4] = {0,0,0,0};
 int i = 0;
 
 void DOOR_SM()
@@ -53,9 +54,17 @@ void DOOR_SM()
         else
         {
             arr[count++] = PINA;
-	    if(count == 4){
-		PORTB = 0x01;
-	    }
+            if (count == 4)
+            {
+                if (arr[0] == 0x04 && arr[1] == 0x01 && arr[2] == 0x02 && arr[3] == 0x01)
+                {
+                    PORTB = 1;
+                }
+                else
+                {
+                    PORTB = 0;
+                }
+            }
             DOOR_STATE = BUTTON_PRESS;
         }
     }
@@ -89,5 +98,4 @@ int main(void)
 //// {'inputs' : [('PINA', 0x00)], 'iterations' : 2},
 //// {'inputs' : [('PINA', 0x01)], 'iterations' : 2},
 //
-
 
