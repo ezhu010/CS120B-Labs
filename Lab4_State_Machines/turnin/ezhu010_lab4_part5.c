@@ -30,7 +30,12 @@ void DOOR_SM()
     switch (DOOR_STATE)
     { 
     case DOOR_START:
-        DOOR_STATE = DOOR_LOCK;
+	if(PINA != 0x00){
+	   DOOR_STATE = DOOR_PASS;
+	}
+	else{
+	  DOOR_STATE = DOOR_LOCK;
+	}
         break;
     case DOOR_LOCK:
         if (PINA != 0x00)
@@ -66,7 +71,7 @@ void DOOR_SM()
             }
         }
         else if (PORTB == 0x00)
-        {
+        {   
             if (arr[0] == 0x04 && arr[1] == 0x01 && arr[2] == 0x02 && arr[3] == 0x01)
             {
                 DOOR_STATE = DOOR_UNLOCK;
@@ -103,8 +108,15 @@ void DOOR_SM()
         count = 0;
         break;
     case DOOR_PASS:
-        arr[count] = PINA;
-        count++;
+	if(PINA != 0x00){
+       	 arr[count] = PINA;
+       	 count++;
+	}
+
+	if (arr[0] == 0x04 && arr[1] == 0x01 && arr[2] == 0x02 && arr[3] == 0x01)
+         {
+		PORTB = 0x01;
+         }
         break;
     default:
         break;
