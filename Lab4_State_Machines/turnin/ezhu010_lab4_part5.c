@@ -116,6 +116,11 @@ void DOOR_SM()
 	if (arr[0] == 0x04 && arr[1] == 0x01 && arr[2] == 0x02 && arr[3] == 0x01)
          {
 		PORTB = 0x01;
+		count = 0;
+		for (i = 0; i < 4; i++)
+       		 {
+            		arr[i] = 0;
+       		 }
          }
         break;
     default:
