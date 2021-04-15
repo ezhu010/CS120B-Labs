@@ -17,9 +17,7 @@
 enum DOOR_STATES
 {
     DOOR_START,
-    DOOR_LOCK,
-    DOOR_UNLOCK,
-    DOOR_BUTTONP,
+    BUTTON_PRESS,
     DOOR_WAIT,
 } DOOR_STATE;
 unsigned char count = 0;
@@ -31,44 +29,44 @@ void DOOR_SM()
     switch (DOOR_STATE)
     {
     case DOOR_START:
-        if (PINA != 0x00)
-        {
-            arr[count] = PINA;
-            count++;
-            DOOR_STATE = DOOR_BUTTONP;
-        }
-
-    case DOOR_BUTTONP:
         if (PINA != 0)
         {
-            DOOR_STATE = DOOR_BUTTONP;
+            arr[count++] = PINA;
+            DOOR_STATE = BUTTON_PRESS;
         }
-	if(count == 4){
-	    PORTB = 0x01;
-	}
+        break;
+    case BUTTON_PRESS:
+        if (PINA != 0)
+        {
+            DOOR_STATE = BUTTON_PRESS;
+        }
         else
         {
             DOOR_STATE = DOOR_WAIT;
         }
-
+        break;
     case DOOR_WAIT:
         if (PINA == 0)
         {
             DOOR_STATE = DOOR_WAIT;
         }
-        if (count == 4)
-        {
-            if (arr[0] == 0x04 && arr[1] == 0x01 && arr[2] == 0x02 && arr[3] == 0x01)
-            {
-                PORTB = 0x01;
-            }
-        }
         else
         {
-            arr[count] = PINA;
-            count++;
-            DOOR_STATE = DOOR_BUTTONP;
+            arr[count++] = PINA;
+	    if(count == 4){
+	        PORTB = 0x01;
+	    }
+            DOOR_STATE = BUTTON_PRESS;
+	    
         }
+    }
+
+    switch (DOOR_STATE)
+    {
+    case BUTTON_PRESS:
+        break;
+    default:
+        break;
     }
 }
 
@@ -84,5 +82,12 @@ int main(void)
         DOOR_SM();
     }
 }
+
+//{'inputs' : [('PINA', 0x00)], 'iterations' : 3},
+//// {'inputs' : [('PINA', 0x01)], 'iterations' : 2},
+//// {'inputs' : [('PINA', 0x00)], 'iterations' : 3},
+//// {'inputs' : [('PINA', 0x02)], 'iterations' : 2},
+//// {'inputs' : [('PINA', 0x00)], 'iterations' : 2},
+//// {'inputs' : [('PINA', 0x01)], 'iterations' : 2},
 
 
