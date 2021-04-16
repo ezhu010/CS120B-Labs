@@ -1,3 +1,8 @@
+
+
+
+
+
 # Array of tests to run (in order)
 # Each test contains
 #   description - 
@@ -17,17 +22,36 @@
 tests = [
 
 
+	{'description': 'PINA: 0x00=> PORTB: 0x00',
+    'steps': [
+
+        {'inputs' : [('PINA', 0x00)], 'iterations' : 2},
+],
+    'expected': [('PORTB',0X00)],
+    },
+
+
+     {'description': 'PINA: 0x03 => PORTB: 0x00',
+    'steps': [
+
+        {'inputs' : [('PINA', 0x03)], 'iterations' : 2},
+],
+    'expected': [('PORTB',0X00)],
+    },
+
+
+
      {'description': 'PINA: 0x04, 0x00, 0x01, 0x00, 0x02, 0x00, 0x01 => PORTB: 0x01',
     'steps': [ 
 
 
-	{'inputs' : [('PINA', 0x04)], 'iterations':  100},
-	{'inputs' : [('PINA', 0x00)], 'iterations' : 100},
-	{'inputs' : [('PINA', 0x01)], 'iterations' : 100},
-	{'inputs' : [('PINA', 0x00)], 'iterations' : 100},
-	{'inputs' : [('PINA', 0x02)], 'iterations' : 100},
-	{'inputs' : [('PINA', 0x00)], 'iterations' : 100},
-	{'inputs' : [('PINA', 0x01)], 'iterations' : 100},
+	{'inputs' : [('PINA', 0x04)], 'iterations':  2},
+	{'inputs' : [('PINA', 0x00)], 'iterations' : 2},
+	{'inputs' : [('PINA', 0x01)], 'iterations' : 2},
+	{'inputs' : [('PINA', 0x00)], 'iterations' : 2},
+	{'inputs' : [('PINA', 0x02)], 'iterations' : 2},
+	{'inputs' : [('PINA', 0x00)], 'iterations' : 2},
+	{'inputs' : [('PINA', 0x01)], 'iterations' : 2},
 
 ],
     'expected': [('PORTB',0X01)],
@@ -43,4 +67,3 @@ tests = [
 # to be scoped at the function level (for static variables) if there are naming conflicts. The 
 # variables listed here will display everytime you hit (and stop at) a breakpoint
 watch = ['count', 'arr']
-
