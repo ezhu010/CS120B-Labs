@@ -1,7 +1,3 @@
-
-
-
-
 # Array of tests to run (in order)
 # Each test contains
 #   description -
