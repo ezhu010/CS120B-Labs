@@ -13,7 +13,7 @@
 #endif
 #include "timer.h"
 
-enum LIGHT_STATES {LIGHT_INIT, LIGHT_ONE,LIGHT_TWO, LIGHT_THREE} LIGHT_STATE;
+enum LIGHT_STATES {LIGHT_INIT, LIGHT_ONE,LIGHT_TWO, LIGHT_THREE, LIGHT_TWO_TEMP} LIGHT_STATE;
 
 void LIGHT_SM(){
 	switch(LIGHT_STATE){
@@ -27,6 +27,9 @@ void LIGHT_SM(){
 			LIGHT_STATE = LIGHT_THREE;
 			break;
 		case LIGHT_THREE:
+			LIGHT_STATE = LIGHT_TWO_TEMP;
+			break;
+		case LIGHT_TWO_TEMP:
 			LIGHT_STATE = LIGHT_ONE;
 			break;
 	}
@@ -41,6 +44,10 @@ void LIGHT_SM(){
 			break;
 		case LIGHT_THREE:
 			PORTB = 0x04;
+			break;
+
+		case LIGHT_TWO_TEMP:
+			PORTB = 0x02;
 			break;
 		}
 }
