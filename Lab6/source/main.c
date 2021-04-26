@@ -1,74 +1,131 @@
-/*	Author: lab
- *  Partner(s) Name: 
- *	Lab Section:
- *	Assignment: Lab #  Exercise #
- *	Exercise Description: [optional - include for your own benefit]
- *
- *	I acknowledge all content contained herein, excluding template or example
- *	code, is my own original work.
- */
 #include <avr/io.h>
+#include <avr/interrupt.h>
 #ifdef _SIMULATE_
 #include "simAVRHeader.h"
 #endif
 #include "timer.h"
+enum LIGHT_STATES
+{
+	LIGHT_START,
+	LIGHT_INIT,
+	LIGHT_NEXT,
+	LIGHT_PAUSE,
+	LIGHT_RESET_ONE,
+	LIGHT_RESET_TWO
+} LIGHT_STATE;
+unsigned char temp = 0x00;
 
-enum LIGHT_STATES {LIGHT_INIT, LIGHT_ONE,LIGHT_TWO, LIGHT_THREE, LIGHT_TWO_TEMP} LIGHT_STATE;
-
-void LIGHT_SM(){
-	switch(LIGHT_STATE){
-		case LIGHT_INIT:
-			LIGHT_STATE = LIGHT_ONE;
-			break;
-		case LIGHT_ONE:
-			LIGHT_STATE = LIGHT_TWO;
-			break;
-		case LIGHT_TWO:
-			LIGHT_STATE = LIGHT_THREE;
-			break;
-		case LIGHT_THREE:
-			LIGHT_STATE = LIGHT_TWO_TEMP;
-			break;
-		case LIGHT_TWO_TEMP:
-			LIGHT_STATE = LIGHT_ONE;
-			break;
-	}
-	switch(LIGHT_STATE){
-		case LIGHT_INIT:
-			break;
-		case LIGHT_ONE:
-			PORTB = 0x01;
-			break;
-		case LIGHT_TWO:
-			PORTB = 0x02;
-			break;
-		case LIGHT_THREE:
-			PORTB = 0x04;
-			break;
-
-		case LIGHT_TWO_TEMP:
-			PORTB = 0x02;
-			break;
+void LIGHT_SM()
+{
+	switch (LIGHT_STATE)
+	{
+	case LIGHT_START:
+		LIGHT_STATE = LIGHT_INIT;
+		break;
+	case LIGHT_INIT:
+		LIGHT_STATE = LIGHT_NEXT;
+		break;
+	case LIGHT_NEXT:
+		if ((~PINA & 0x01))
+		{
+			LIGHT_STATE = LIGHT_PAUSE;
 		}
+		else
+		{
+			LIGHT_STATE = LIGHT_NEXT;
+		}
+		break;
+	case LIGHT_PAUSE:
+		if ((~PINA & 0x01))
+		{
+			LIGHT_STATE = LIGHT_PAUSE;
+		}
+		else
+		{
+			LIGHT_STATE = LIGHT_RESET_ONE;
+		}
+		break;
+	case LIGHT_RESET_ONE:
+		if ((~PINA & 0x01))
+		{
+			LIGHT_STATE = LIGHT_RESET_TWO;
+		}
+		else
+		{
+			LIGHT_STATE = LIGHT_RESET_ONE;
+		}
+		break;
+	case LIGHT_RESET_TWO:
+		if ((~PINA & 0x01))
+		{
+			LIGHT_STATE = LIGHT_RESET_TWO;
+		}
+		else
+		{
+			LIGHT_STATE = LIGHT_INIT;
+		}
+		break;
+	default:
+		LIGHT_STATE = LIGHT_START;
+		break;
+	}
+	switch (LIGHT_STATE)
+	{
+	case LIGHT_START:
+		break;
+	case LIGHT_INIT:
+		PORTB = 0x01;
+		break;
+	case LIGHT_NEXT:
+		if (temp == 0x00)
+		{
+			if (PORTB == 0x04)
+			{
+				PORTB = PORTB >> 1;
+				temp = 0x01;
+			}
+			else
+			{
+				PORTB = PORTB << 1;
+			}
+		}
+		else
+		{
+			if (PORTB == 0x01)
+			{
+				PORTB = PORTB << 1;
+				temp = 0x00;
+			}
+			else
+			{
+				PORTB = PORTB >> 1;
+			}
+		}
+		break;
+	case LIGHT_PAUSE:
+		break;
+	case LIGHT_RESET_ONE:
+		break;
+	case LIGHT_RESET_TWO:
+		break;
+	default:
+		break;
+	}
 }
 
-
-
-int main(void) {
-    /* Insert DDR and PORT initializations */
+void main(void)
+{
+	DDRA = 0x00;
+	PORTA = 0xFF;
 	DDRB = 0xFF;
 	PORTB = 0x00;
-	//unsigned char tmpB = 0;
-	TimerSet(1000);
+	TimerSet(300);
 	TimerOn();
-	LIGHT_STATE = LIGHT_INIT;
-    /* Insert your solution below */
-    while (1) {
-	//tmpB = ~tmpB;
-	//PORTB = tmpB;
-	LIGHT_SM();
-	while(!TimerFlag);
-	TimerFlag = 0;
-    }
-    return 1;
+	while (1)
+	{
+		LIGHT_SM();
+		while (!TimerFlag)
+			;
+		TimerFlag = 0;
+	}
 }
