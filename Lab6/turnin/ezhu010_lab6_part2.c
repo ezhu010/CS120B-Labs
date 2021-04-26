@@ -6,10 +6,8 @@
  * I acknowledge all content contained herein, excluding template or example
  * code is my own original work.
  *
- *  Demo Link: https://youtu.be/lvdU8eLbyRg
+ *  Demo Link: https://youtu.be/8DbNuU8Klhs
  */
-
-
 
 #include <avr/io.h>
 #include <avr/interrupt.h>
@@ -137,7 +135,8 @@ int main()
 	while (1)
 	{
 		LIGHT_SM();
-		while (!TimerFlag);
+		while (!TimerFlag)
+			;
 		TimerFlag = 0;
 	}
 }
