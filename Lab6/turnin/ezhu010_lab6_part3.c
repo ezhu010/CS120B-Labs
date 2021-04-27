@@ -41,7 +41,7 @@ void COUNT_SM()
         }
         else if ((~PINA & 0x03) == 0x02)
         {
-            COUNTER_STATE = COUNTER_DECRE_HOLD, ;
+            COUNTER_STATE = COUNTER_DECRE_HOLD;
         }
         break;
     case COUNTER_RESET:
@@ -72,7 +72,7 @@ void COUNT_SM()
         }
         COUNTER_STATE = COUNTER_INCRE_WAIT;
         break;
-    case COUNTER_DECRE_HOLD, :
+    case COUNTER_DECRE_HOLD:
         if (temp >= 10)
         {
             temp = 0x00;
@@ -82,7 +82,7 @@ void COUNT_SM()
     case COUNTER_INCRE_WAIT:
         if ((~PINA & 0x03) == 0x01)
         {
-            ++temp;
+            temp++;
             COUNTER_STATE = COUNTER_INCRE_WAIT;
             if (temp >= 10)
             {
@@ -112,7 +112,7 @@ void COUNT_SM()
             temp++;
             if (temp >= 10)
             {
-                COUNTER_STATE = COUNTER_DECRE_HOLD, ;
+                COUNTER_STATE = COUNTER_DECRE_HOLD;
             }
         }
         else
@@ -150,7 +150,7 @@ void COUNT_SM()
             PORTB = PORTB + 1;
         }
         break;
-    case COUNTER_DECRE_HOLD, :
+    case COUNTER_DECRE_HOLD:
         if (PORTB > 0)
         {
             PORTB = PORTB - 1;
