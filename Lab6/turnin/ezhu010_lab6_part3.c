@@ -55,10 +55,7 @@ void COUNT_SM()
         }
         break;
     case COUNTER_INCRE:
-        /*if (temp >= 0x0A) {
-	temp = 0x00;
-	COUNTER_STATE = COUNTER_INCRE_WAIT;
-	}*/
+
         if ((~PINA & 0x03) == 0x01)
         {
             COUNTER_STATE = COUNTER_INCRE;
