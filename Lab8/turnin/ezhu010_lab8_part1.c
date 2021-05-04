@@ -1,3 +1,12 @@
+/*	Author: Edward Zhu
+ *  Partner(s) Name: 
+ *	Lab Section: 023
+ *	Assignment: Lab 8  Exercise 1
+ *	Exercise Description: [optional - include for your own benefit]
+ *
+ *	I acknowledge all content contained herein, excluding template or example
+ *	code, is my own original work.
+ */
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #ifdef _SIMULATE_
@@ -8,15 +17,11 @@ enum States
 {
     Start,
     Init,
-    Increment,
-    Decrement,
-    TurnOnOff,
-    Release
+    Cnote,
+    Dnote,
+    Enote
 } state;
-unsigned char alternate = 0x00;
-unsigned char temp = 0x00;
-double array[8] = {261.63, 293.66, 329.63, 349.23, 392.00, 440.00, 493.88, 523.25};
-
+double temp = 0;
 void set_PWM(double frequency)
 {
     static double current_frequency;
@@ -71,15 +76,15 @@ void Tick()
     case Init:
         if ((~PINA & 0x07) == 0x01)
         {
-            state = Increment;
+            state = Cnote;
         }
         else if ((~PINA & 0x07) == 0x02)
         {
-            state = Decrement;
+            state = Dnote;
         }
         else if ((~PINA & 0x07) == 0x04)
         {
-            state = TurnOnOff;
+            state = Enote;
         }
         else
         {
@@ -87,26 +92,36 @@ void Tick()
         }
         break;
 
-    case Increment:
-        state = Release;
-        break;
-
-    case Decrement:
-        state = Release;
-        break;
-
-    case TurnOnOff:
-        state = Release;
-        break;
-
-    case Release:
-        if ((~PINA & 0x07) == 0x00)
+    case Cnote:
+        if ((~PINA & 0x07) == 0x01)
         {
-            state = Init;
+            state = Cnote;
         }
         else
         {
-            state = Release;
+            state = Init;
+        }
+        break;
+
+    case Dnote:
+        if ((~PINA & 0x07) == 0x02)
+        {
+            state = Dnote;
+        }
+        else
+        {
+            state = Init;
+        }
+        break;
+
+    case Enote:
+        if ((~PINA & 0x07) == 0x04)
+        {
+            state = Enote;
+        }
+        else
+        {
+            state = Init;
         }
         break;
 
@@ -119,47 +134,23 @@ void Tick()
     case Start:
         break;
     case Init:
+        set_PWM(0);
         break;
-    case Increment:
-        if (temp < 0x07)
-        {
-            ++temp;
-        }
-        if (alternate == 0x01)
-        {
-            set_PWM(array[temp]);
-        }
+    case Cnote:
+        set_PWM(261.63);
         break;
-    case Decrement:
-        if (temp > 0x00)
-        {
-            --temp;
-        }
-        if (alternate == 0x01)
-        {
-            set_PWM(array[temp]);
-        }
+    case Dnote:
+        set_PWM(293.66);
         break;
-    case TurnOnOff:
-        if (alternate == 0x00)
-        {
-            alternate = 0x01;
-            set_PWM(array[temp]);
-        }
-        else
-        {
-            alternate = 0x00;
-            set_PWM(0);
-        } // turn off
-        break;
-    case Release:
+    case Enote:
+        set_PWM(329.63);
         break;
     default:
         break;
     }
 }
 
-int main(void)
+void main(void)
 {
     DDRA = 0x00;
     PORTA = 0xFF;
@@ -176,5 +167,4 @@ int main(void)
         };
         TimerFlag = 0;
     }
-    return 0;
 }
