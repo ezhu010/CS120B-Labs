@@ -4,18 +4,20 @@
 #include "simAVRHeader.h"
 #endif
 #include "timer.h"
-enum States
+
+enum SPEAKER_STATES
 {
-    Start,
-    Init,
-    Increment,
-    Decrement,
-    TurnOnOff,
-    Release
-} state;
+    SPEAKER_BEGIN,
+    SPEAKER_INIT,
+    SPEAKER_SCALE_UP,
+    SPEAKER_SCALE_DOWN,
+    SPEAKER_SOUND,
+    SPEAKER_BUTTON,
+} SPEAKER_STATE;
+
 unsigned char alternate = 0x00;
-unsigned char temp = 0x00;
-double array[8] = {261.63, 293.66, 329.63, 349.23, 392.00, 440.00, 493.88, 523.25};
+unsigned char i = 0x00;
+double notes[8] = {261.63, 293.66, 329.63, 349.23, 392.00, 440.00, 493.88, 523.25};
 
 void set_PWM(double frequency)
 {
@@ -46,120 +48,118 @@ void set_PWM(double frequency)
         current_frequency = frequency;
     }
 }
-
 void PWM_on()
 {
     TCCR3A = (1 << COM3A0);
     TCCR3B = (1 << WGM32) | (1 << CS31) | (1 << CS30);
     set_PWM(0);
 }
-
 void PWM_off()
 {
     TCCR3A = 0x00;
     TCCR3B = 0x00;
 }
 
-void Tick()
+void SPEAKER_SM()
 {
-    switch (state)
+    switch (SPEAKER_STATE)
     {
-    case Start:
-        state = Init;
+    case SPEAKER_BEGIN:
+        SPEAKER_STATE = SPEAKER_INIT;
         break;
 
-    case Init:
+    case SPEAKER_INIT:
         if ((~PINA & 0x07) == 0x01)
         {
-            state = Increment;
+            SPEAKER_STATE = SPEAKER_SCALE_UP;
         }
         else if ((~PINA & 0x07) == 0x02)
         {
-            state = Decrement;
+            SPEAKER_STATE = SPEAKER_SCALE_DOWN;
         }
         else if ((~PINA & 0x07) == 0x04)
         {
-            state = TurnOnOff;
+            SPEAKER_STATE = SPEAKER_SOUND;
         }
         else
         {
-            state = Init;
+            SPEAKER_STATE = SPEAKER_INIT;
         }
         break;
 
-    case Increment:
-        state = Release;
+    case SPEAKER_SCALE_UP:
+        SPEAKER_STATE = SPEAKER_BUTTON;
         break;
 
-    case Decrement:
-        state = Release;
+    case SPEAKER_SCALE_DOWN:
+        SPEAKER_STATE = SPEAKER_BUTTON;
         break;
 
-    case TurnOnOff:
-        state = Release;
+    case SPEAKER_SOUND:
+        SPEAKER_STATE = SPEAKER_BUTTON;
         break;
 
-    case Release:
+    case SPEAKER_BUTTON:
         if ((~PINA & 0x07) == 0x00)
         {
-            state = Init;
+            SPEAKER_STATE = SPEAKER_INIT;
         }
         else
         {
-            state = Release;
+            SPEAKER_STATE = SPEAKER_BUTTON;
         }
         break;
 
     default:
-        state = Start;
+        SPEAKER_STATE = SPEAKER_BEGIN;
         break;
     }
-    switch (state)
+    switch (SPEAKER_STATE)
     {
-    case Start:
+    case SPEAKER_BEGIN:
         break;
-    case Init:
+    case SPEAKER_INIT:
         break;
-    case Increment:
-        if (temp < 0x07)
+    case SPEAKER_SCALE_UP:
+        if (i < 0x07)
         {
-            ++temp;
+            ++i;
         }
         if (alternate == 0x01)
         {
-            set_PWM(array[temp]);
+            set_PWM(notes[i]);
         }
         break;
-    case Decrement:
-        if (temp > 0x00)
+    case SPEAKER_SCALE_DOWN:
+        if (i > 0x00)
         {
-            --temp;
+            --i;
         }
         if (alternate == 0x01)
         {
-            set_PWM(array[temp]);
+            set_PWM(notes[i]);
         }
         break;
-    case TurnOnOff:
+    case SPEAKER_SOUND:
         if (alternate == 0x00)
         {
             alternate = 0x01;
-            set_PWM(array[temp]);
+            set_PWM(notes[i]);
         }
         else
         {
             alternate = 0x00;
             set_PWM(0);
-        } // turn off
+        }
         break;
-    case Release:
+    case SPEAKER_BUTTON:
         break;
     default:
         break;
     }
 }
 
-int main(void)
+int main()
 {
     DDRA = 0x00;
     PORTA = 0xFF;
@@ -170,7 +170,7 @@ int main(void)
     PWM_on();
     while (1)
     {
-        Tick();
+        SPEAKER_SM();
         while (!TimerFlag)
         {
         };
