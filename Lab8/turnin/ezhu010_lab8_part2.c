@@ -1,26 +1,21 @@
-/*	Author: Edward Zhu
- *  Partner(s) Name: 
- *	Lab Section: 023
- *	Assignment: Lab 8  Exercise 1
- *	Exercise Description: [optional - include for your own benefit]
- *
- *	I acknowledge all content contained herein, excluding template or example
- *	code, is my own original work.
- */
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #ifdef _SIMULATE_
 #include "simAVRHeader.h"
 #endif
 #include "timer.h"
-enum SPEAKER_STATES
+enum States
 {
-    SPEAKER_START,
-    SPEAKER_INIT,
-    SPEAKER_C,
-    SPEAKER_D,
-    SPEAKER_E,
-} SPEAKER_STATE;
+    Start,
+    Init,
+    Increment,
+    Decrement,
+    TurnOnOff,
+    Release
+} state;
+unsigned char alternate = 0x00;
+unsigned char temp = 0x00;
+double array[8] = {261.63, 293.66, 329.63, 349.23, 392.00, 440.00, 493.88, 523.25};
 
 void set_PWM(double frequency)
 {
@@ -63,105 +58,121 @@ void PWM_off()
     TCCR3B = 0x00;
 }
 
-void SPEAKER_SM()
+void Tick()
 {
-    switch (SPEAKER_STATE)
+    switch (state)
     {
-    case SPEAKER_START:
-        SPEAKER_STATE = SPEAKER_INIT;
+    case Start:
+        state = Init;
         break;
 
-    case SPEAKER_INIT:
+    case Init:
         if ((~PINA & 0x07) == 0x01)
         {
-            SPEAKER_STATE = SPEAKER_C;
+            state = Increment;
         }
         else if ((~PINA & 0x07) == 0x02)
         {
-            SPEAKER_STATE = SPEAKER_D;
+            state = Decrement;
         }
         else if ((~PINA & 0x07) == 0x04)
         {
-            SPEAKER_STATE = SPEAKER_E, ;
+            state = TurnOnOff;
         }
         else
         {
-            SPEAKER_STATE = SPEAKER_INIT;
+            state = Init;
         }
         break;
 
-    case SPEAKER_PLAYC:
-        if ((~PINA & 0x07) == 0x01)
-        {
-            SPEAKER_STATE = SPEAKER_C;
-        }
-        else
-        {
-            SPEAKER_STATE = SPEAKER_INIT;
-        }
+    case Increment:
+        state = Release;
         break;
 
-    case SPEAKER_D:
-        if ((~PINA & 0x07) == 0x02)
-        {
-            SPEAKER_STATE = SPEAKER_D;
-        }
-        else
-        {
-            SPEAKER_STATE = SPEAKER_INIT;
-        }
+    case Decrement:
+        state = Release;
         break;
 
-    case SPEAKER_E, :
-        if ((~PINA & 0x07) == 0x04)
+    case TurnOnOff:
+        state = Release;
+        break;
+
+    case Release:
+        if ((~PINA & 0x07) == 0x00)
         {
-            SPEAKER_STATE = SPEAKER_E, ;
+            state = Init;
         }
         else
         {
-            SPEAKER_STATE = SPEAKER_INIT;
+            state = Release;
         }
         break;
 
     default:
-        SPEAKER_STATE = SPEAKER_START;
+        state = Start;
         break;
     }
-    switch (SPEAKER_STATE)
+    switch (state)
     {
-    case SPEAKER_START:
+    case Start:
         break;
-    case SPEAKER_INIT:
-        set_PWM(0);
+    case Init:
         break;
-    case SPEAKER_C:
-        set_PWM(261.63);
+    case Increment:
+        if (temp < 0x07)
+        {
+            ++temp;
+        }
+        if (alternate == 0x01)
+        {
+            set_PWM(array[temp]);
+        }
         break;
-    case SPEAKER_D:
-        set_PWM(293.66);
+    case Decrement:
+        if (temp > 0x00)
+        {
+            --temp;
+        }
+        if (alternate == 0x01)
+        {
+            set_PWM(array[temp]);
+        }
         break;
-    case SPEAKER_E, :
-        set_PWM(329.63);
+    case TurnOnOff:
+        if (alternate == 0x00)
+        {
+            alternate = 0x01;
+            set_PWM(array[temp]);
+        }
+        else
+        {
+            alternate = 0x00;
+            set_PWM(0);
+        } // turn off
+        break;
+    case Release:
+        break;
+    default:
         break;
     }
 }
 
-void main(void)
+int main(void)
 {
     DDRA = 0x00;
     PORTA = 0xFF;
     DDRB = 0xFF;
     PORTB = 0x00;
     TimerSet(100);
-    PWM_on();
-
     TimerOn();
+    PWM_on();
     while (1)
     {
-        SPEAKER_SM();
+        Tick();
         while (!TimerFlag)
         {
         };
         TimerFlag = 0;
     }
+    return 0;
 }
