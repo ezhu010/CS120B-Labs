@@ -5,7 +5,8 @@
 #endif
 #include "timer.h"
 
-int notes[3] = {261.33, 293.66, 0};
+int notes[15] = {261.33,261.33,392,392,440,440,392, 349.23, 349.23,329.63, 329.63,293.66,293.66,261.33,0};
+int pause[15] = {200,200};
 void set_PWM(double frequency)
 {
 	static double current_frequency;
@@ -114,7 +115,7 @@ void SPEAKER_SM()
 		break;
 
 	case SPEAKER_FINISH:
-		set_PWM(261.33);
+		set_PWM(0);
 		break;
 	}
 }
