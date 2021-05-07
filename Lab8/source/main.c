@@ -6,7 +6,7 @@
 #include "timer.h"
 
 // int notes[15] = {261.33,261.33,392,392,440,440,392, 349.23, 349.23,329.63, 329.63,293.66,293.66,261.33,0};
-int notes[4] = {261.33, 0, 261.33, 0};
+int notes[32] = {261.33, 0, 261.33,0,392,0,392,0,440,0,440,0,392,0,392,0,349.23,0,349.23,0,329.23,0,329.23,0,293.66,0, 293.66,0,261.33,261.33 ,-1};
 
 void set_PWM(double frequency)
 {
@@ -71,18 +71,18 @@ void SPEAKER_SM()
 		}
 		break;
 	case SPEAKER_PLAY:
-		if (notes[i] != 0)
+		if (notes[i] != -1)
 		{
 			TimerSet(1000);
 			SPEAKER_STATE = SPEAKER_PLAY;
 		}
-		else if (notes[i] == 0 && (~PINA & 0x01) == 0)
+		else if (notes[i] == -1 && (~PINA & 0x01) == 0)
 		{
 			SPEAKER_STATE = SPEAKER_INIT;
 			i = 0;
 			TimerSet(100);
 		}
-		else if (notes[i] == 0 && (~PINA & 0x01) == 0x01)
+		else if (notes[i] == -1 && (~PINA & 0x01) == 0x01)
 		{
 			i = 0;
 			TimerSet(100);
@@ -108,7 +108,12 @@ void SPEAKER_SM()
 		set_PWM(0);
 		break;
 	case SPEAKER_PLAY:
-		TimerSet(1000);
+		if(notes[i] != 0){
+			TimerSet(500);
+		}
+		else {
+			TimerSet(100);
+		}
 		set_PWM(notes[i]);
 		i++;
 		break;
