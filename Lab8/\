@@ -5,7 +5,7 @@
 #endif
 #include "timer.h"
 
-int notes[3] = {261.33, 293.66,0};
+int notes[3] = {261.33, 293.66,-1}
 void set_PWM(double frequency)
 {
     static double current_frequency;
@@ -48,7 +48,7 @@ void PWM_off()
 }
 
 int i = 0;
-enum SPEAKER{SPEAKER_INIT, SPEAKER_PLAY, SPEAKER_FINISH,SPEAKER_ON} SPEAKER_STATE;
+enum SPEAKER{SPEAKER_INIT, SPEAKER_PLAY} SPEAKER_STATE;
 
 void SPEAKER_SM(){
 
@@ -62,32 +62,13 @@ void SPEAKER_SM(){
 			}
 			break;
 		case SPEAKER_PLAY:
-			if(notes[i] != 0){
-				TimerSet(1000);
+			if(notes[i] != -1){
 				SPEAKER_STATE = SPEAKER_PLAY;
 			}
-			else if(notes[i] == 0 && (~PINA & 0x01) == 0) {
+			else {
 				SPEAKER_STATE = SPEAKER_INIT;
-				i = 0;
-				TimerSet(100);
-			}
-			else if(notes[i] == 0 && (~PINA & 0x01) == 0x01){
-				SPEAKER_STATE = SPEAKER_FINISH;
 			}
 			break;
-
-		case SPEAKER_FINISH:
-			if((~PINA & 0x01) == 0x01){
-				SPEAKER_STATE = SPEAKER_FINISH;
-			}
-			else{
-				SPEAKER_STATE = SPEAKER_ON;
-			}
-			break;
-		case SPEAKER_ON:
-			SPEAKER_STATE = SPEAKER_INIT;
-			break;
-
 
 		}
 
@@ -96,22 +77,9 @@ void SPEAKER_SM(){
 			set_PWM(0);
 			break;
 		case SPEAKER_PLAY:
-			TimerSet(1000);
 			set_PWM(notes[i]);
 			i++;
 			break;
-
-
-		 case SPEAKER_FINISH:
-                         set_PWM(261.33);
-                         break;
-
-
-		case SPEAKER_ON:
-			 set_PWM(440);
-			 TimerSet(100);
-			 break;
-
 		}
 
 }
@@ -122,16 +90,13 @@ void SPEAKER_SM(){
 int main(){
 	DDRA = 0x00;
 	PORTA = 0xFF;
-	DDRB = 0xFF;
-	PORTB = 0x00;
-	TimerSet(100);
+	TimerSet(1000);
 	PWM_on();
-	TimerOn();
 	SPEAKER_STATE = SPEAKER_INIT;
 
 	while(1){
 		SPEAKER_SM();
 		while(!TimerFlag){};
-		TimerFlag = 0; 
+		TimerFlag = 0;
 	}
 }
