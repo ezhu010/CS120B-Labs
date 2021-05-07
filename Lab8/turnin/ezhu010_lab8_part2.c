@@ -12,7 +12,7 @@ enum SPEAKER_STATES
     SPEAKER_SCALE_UP,
     SPEAKER_SCALE_DOWN,
     SPEAKER_SOUND,
-    SPEAKER_BUTTON,
+    SPEAKER_BUTTON
 } SPEAKER_STATE;
 
 unsigned char alternate = 0x00;
@@ -88,25 +88,25 @@ void SPEAKER_SM()
         break;
 
     case SPEAKER_SCALE_UP:
-        SPEAKER_STATE = SPEAKER_BUTTON, ;
+        SPEAKER_STATE = SPEAKER_BUTTON;
         break;
 
     case SPEAKER_SCALE_DOWN:
-        SPEAKER_STATE = SPEAKER_BUTTON, ;
+        SPEAKER_STATE = SPEAKER_BUTTON;
         break;
 
     case SPEAKER_SOUND:
-        SPEAKER_STATE = SPEAKER_BUTTON, ;
+        SPEAKER_STATE = SPEAKER_BUTTON;
         break;
 
-    case SPEAKER_BUTTON, :
+    case SPEAKER_BUTTON:
         if ((~PINA & 0x07) == 0x00)
         {
             SPEAKER_STATE = SPEAKER_INIT;
         }
         else
         {
-            SPEAKER_STATE = SPEAKER_BUTTON, ;
+            SPEAKER_STATE = SPEAKER_BUTTON;
         }
         break;
 
@@ -152,7 +152,7 @@ void SPEAKER_SM()
             set_PWM(0);
         }
         break;
-    case SPEAKER_BUTTON, :
+    case SPEAKER_BUTTON:
         break;
     default:
         break;

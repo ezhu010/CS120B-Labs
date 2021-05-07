@@ -19,7 +19,7 @@ enum SPEAKER_STATES
     SPEAKER_INIT,
     SPEAKER_C,
     SPEAKER_D,
-    SPEAKER_E,
+    SPEAKER_E
 } SPEAKER_STATE;
 
 void set_PWM(double frequency)
@@ -82,7 +82,7 @@ void SPEAKER_SM()
         }
         else if ((~PINA & 0x07) == 0x04)
         {
-            SPEAKER_STATE = SPEAKER_E, ;
+            SPEAKER_STATE = SPEAKER_E;
         }
         else
         {
