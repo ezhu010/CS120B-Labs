@@ -5,8 +5,9 @@
 #endif
 #include "timer.h"
 
-int notes[15] = {261.33,261.33,392,392,440,440,392, 349.23, 349.23,329.63, 329.63,293.66,293.66,261.33,0};
-int pause[15] = {200,200};
+// int notes[15] = {261.33,261.33,392,392,440,440,392, 349.23, 349.23,329.63, 329.63,293.66,293.66,261.33,0};
+int notes[4] = {261.33, 0, 261.33, 0};
+
 void set_PWM(double frequency)
 {
 	static double current_frequency;
@@ -47,7 +48,6 @@ void PWM_off()
 	TCCR3A = 0x00;
 	TCCR3B = 0x00;
 }
-
 int i = 0;
 enum SPEAKER
 {
@@ -58,7 +58,6 @@ enum SPEAKER
 
 void SPEAKER_SM()
 {
-
 	switch (SPEAKER_STATE)
 	{
 	case SPEAKER_INIT:
