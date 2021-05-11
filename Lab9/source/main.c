@@ -1,6 +1,5 @@
 
 
-
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #ifdef _SIMULATE_
@@ -95,20 +94,29 @@ void TickCombineLEDsSM() {
 int main(void) {
     DDRA = 0x00; PORTA = 0xFF;
     DDRB = 0xFF; PORTB = 0x00;
-    unsigned long elapsed = 0;
-    const unsigned long timerPeriod = 1000;
-    TimerSet(1000);
+    unsigned long ThreeElapsed = 0;
+    unsigned long BlinkingElapsed = 0;
+    const unsigned long timerPeriod = 100;
+    TimerSet(100);
     TimerOn();
     ThreeLEDstate = ThreeStart;
     BlinkingLEDstate = BlinkingStart;
     CombineLEDstate = CombineStart;
 
     while (1) {
-	TickThreeLEDsSM();
-	TickBlinkingLEDSM();
+	if (ThreeElapsed >= 300) {
+		TickThreeLEDsSM();
+		ThreeElapsed = 0;
+	}
+	if (BlinkingElapsed >= 1000) {
+		TickBlinkingLEDSM();
+		BlinkingElapsed = 0;
+	}
 	TickCombineLEDsSM();
 	while(!TimerFlag) {};
 	TimerFlag = 0;
+	ThreeElapsed += timerPeriod;
+	BlinkingElapsed += timerPeriod;
     }
     return 0;
 }
