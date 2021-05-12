@@ -95,7 +95,7 @@ int main(void)
 	unsigned long ThreeLightTime = 0;
 	unsigned long BlinkLightTime = 0;
 	const unsigned long period = 100;
-	TimerSet(1000);
+	TimerSet(100);
 	TimerOn();
 	ThreeLightState = LIGHT_ZERO;
 	BlinkLightState = LIGHT_INIT;
@@ -109,9 +109,10 @@ int main(void)
 		}
 		if (BlinkLightTime >= 1000)
 		{
-			CombineLEDsSM();
+			BlinkingLEDSM();
 			BlinkLightTime = 0;
 		}
+		CombineLEDsSM();
 		while (!TimerFlag)
 		{
 		};
