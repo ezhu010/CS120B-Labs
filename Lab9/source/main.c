@@ -143,7 +143,7 @@ void TickSpeakerSM()
 		Speakerstate = SpeakerOff;
 		break;
 	case SpeakerOff:
-		if ((~PINA & 0x01) == 0x01)
+		if ((~PINA & 0x04) == 0x01)
 		{
 			Speakerstate = SpeakerOn;
 		}
@@ -153,7 +153,7 @@ void TickSpeakerSM()
 		}
 		break;
 	case SpeakerOn:
-		if ((~PINA & 0x01) == 0x00)
+		if ((~PINA & 0x04) == 0x00)
 		{
 			Speakerstate = SpeakerOff;
 		}
