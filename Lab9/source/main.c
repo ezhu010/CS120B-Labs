@@ -8,7 +8,6 @@
 #include "timer.h"
 enum ThreeLEDStates
 {
-	ThreeStart,
 	Zero,
 	One,
 	Two
@@ -31,9 +30,6 @@ void TickThreeLEDsSM()
 {
 	switch (ThreeLEDstate)
 	{
-	case ThreeStart:
-		ThreeLEDstate = Zero;
-		break;
 
 	case Zero:
 		ThreeLEDstate = One;
@@ -46,16 +42,11 @@ void TickThreeLEDsSM()
 	case Two:
 		ThreeLEDstate = Zero;
 		break;
-
-	default:
-		ThreeLEDstate = ThreeStart;
-		break;
 	}
 
 	switch (ThreeLEDstate)
 	{
-	case ThreeStart:
-		break;
+
 	case Zero:
 		threeLEDs = 0x01;
 		break;
@@ -139,7 +130,7 @@ int main(void)
 	const unsigned long timerPeriod = 100;
 	TimerSet(100);
 	TimerOn();
-	ThreeLEDstate = ThreeStart;
+	ThreeLEDstate = Zero;
 	BlinkingLEDstate = BlinkingStart;
 	CombineLEDstate = CombineStart;
 
