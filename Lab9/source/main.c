@@ -62,9 +62,9 @@ void BlinkingLEDSM()
 	switch (BlinkLightState)
 	{
 	case LIGHT_INIT:
-		BlinkLightState = Blink;
+		BlinkLightState = LIGHT_BLINK;
 		break;
-	case Blink:
+	case LIGHT_BLINK:
 		BlinkLightState = LIGHT_INIT;
 		break;
 	}
@@ -73,7 +73,7 @@ void BlinkingLEDSM()
 	case LIGHT_INIT:
 		blinkingLED = 0x00;
 		break;
-	case Blink:
+	case LIGHT_BLINK:
 		blinkingLED = 0x01;
 		break;
 	default:
