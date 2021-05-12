@@ -92,6 +92,9 @@ int main(void)
 	PORTA = 0xFF;
 	DDRB = 0xFF;
 	PORTB = 0x00;
+	unsigned long ThreeLightTime = 0;
+	unsigned long BlinkLightTime = 0;
+	const unsigned long period = 100;
 	TimerSet(1000);
 	TimerOn();
 	ThreeLightState = LIGHT_ZERO;
@@ -99,13 +102,22 @@ int main(void)
 
 	while (1)
 	{
-		ThreeLEDsSM();
-		BlinkingLEDSM();
-		CombineLEDsSM();
+		if (ThreeLightTime >= 300)
+		{
+			ThreeLEDsSM();
+			ThreeLightTime = 0;
+		}
+		if (BlinkLightTime >= 1000)
+		{
+			CombineLEDsSM();
+			BlinkLightTime = 0;
+		}
 		while (!TimerFlag)
 		{
 		};
 		TimerFlag = 0;
+		ThreeLightTime += period;
+		BlinkLightTime += period;
 	}
 	return 0;
 }
