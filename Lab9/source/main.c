@@ -92,8 +92,6 @@ int main(void)
 	PORTA = 0xFF;
 	DDRB = 0xFF;
 	PORTB = 0x00;
-	unsigned long elapsed = 0;
-	const unsigned long timerPeriod = 1000;
 	TimerSet(1000);
 	TimerOn();
 	ThreeLightState = LIGHT_ZERO;
