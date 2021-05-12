@@ -1,59 +1,55 @@
 
-
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #ifdef _SIMULATE_
 #include "simAVRHeader.h"
 #endif
 #include "timer.h"
-enum ThreeLEDStates
+enum ThreeLightStates
 {
-	Zero,
-	One,
-	Two
-} ThreeLEDstate;
-enum BlinkingLEDStates
+	LIGHT_ZERO,
+	LIGHT_ONE,
+	LIGHT_TWO
+} ThreeLightState;
+enum BlinkLightStates
 {
-	BlinkingStart,
-	BlinkingInit,
-	Blink
-} BlinkingLEDstate;
-enum CombineLEDStates
+	LIGHT_INIT,
+	LIGHT_BLINK
+} BlinkLightState;
+enum CombineLightStates
 {
-	CombineStart,
 	CombineInit
-} CombineLEDstate;
+} CombineLightState;
 unsigned char threeLEDs = 0x00;
 unsigned char blinkingLED = 0x00;
 
-void TickThreeLEDsSM()
+void ThreeLEDsSM()
 {
-	switch (ThreeLEDstate)
+	switch (ThreeLightState)
 	{
 
-	case Zero:
-		ThreeLEDstate = One;
+	case LIGHT_ZERO:
+		ThreeLightState = LIGHT_ONE;
+		break;
+	case LIGHT_ONE:
+		ThreeLightState = LIGHT_TWO;
 		break;
 
-	case One:
-		ThreeLEDstate = Two;
-		break;
-
-	case Two:
-		ThreeLEDstate = Zero;
+	case LIGHT_TWO:
+		ThreeLightState = LIGHT_ZERO;
 		break;
 	}
 
-	switch (ThreeLEDstate)
+	switch (ThreeLightState)
 	{
 
-	case Zero:
+	case LIGHT_ZERO:
 		threeLEDs = 0x01;
 		break;
-	case One:
+	case LIGHT_ONE:
 		threeLEDs = 0x02;
 		break;
-	case Two:
+	case LIGHT_TWO:
 		threeLEDs = 0x04;
 		break;
 	default:
@@ -61,28 +57,20 @@ void TickThreeLEDsSM()
 	}
 }
 
-void TickBlinkingLEDSM()
+void BlinkingLEDSM()
 {
-	switch (BlinkingLEDstate)
+	switch (BlinkLightState)
 	{
-	case BlinkingStart:
-		BlinkingLEDstate = BlinkingInit;
-		break;
-	case BlinkingInit:
-		BlinkingLEDstate = Blink;
+	case LIGHT_INIT:
+		BlinkLightState = Blink;
 		break;
 	case Blink:
-		BlinkingLEDstate = BlinkingInit;
-		break;
-	default:
-		BlinkingLEDstate = BlinkingStart;
+		BlinkLightState = LIGHT_INIT;
 		break;
 	}
-	switch (BlinkingLEDstate)
+	switch (BlinkLightState)
 	{
-	case BlinkingStart:
-		break;
-	case BlinkingInit:
+	case LIGHT_INIT:
 		blinkingLED = 0x00;
 		break;
 	case Blink:
@@ -93,30 +81,9 @@ void TickBlinkingLEDSM()
 	}
 }
 
-void TickCombineLEDsSM()
+void CombineLEDsSM()
 {
-	switch (CombineLEDstate)
-	{
-	case CombineStart:
-		CombineLEDstate = CombineInit;
-		break;
-	case CombineInit:
-		CombineLEDstate = CombineInit;
-		break;
-	default:
-		CombineLEDstate = CombineStart;
-		break;
-	}
-	switch (CombineLEDstate)
-	{
-	case CombineStart:
-		break;
-	case CombineInit:
-		PORTB = ((blinkingLED << 3) | (threeLEDs));
-		break;
-	default:
-		break;
-	}
+	PORTB = ((blinkingLED << 3) | (threeLEDs));
 }
 
 int main(void)
@@ -125,34 +92,22 @@ int main(void)
 	PORTA = 0xFF;
 	DDRB = 0xFF;
 	PORTB = 0x00;
-	unsigned long ThreeElapsed = 0;
-	unsigned long BlinkingElapsed = 0;
-	const unsigned long timerPeriod = 100;
-	TimerSet(100);
+	unsigned long elapsed = 0;
+	const unsigned long timerPeriod = 1000;
+	TimerSet(1000);
 	TimerOn();
-	ThreeLEDstate = Zero;
-	BlinkingLEDstate = BlinkingStart;
-	CombineLEDstate = CombineStart;
+	ThreeLightState = LIGHT_ZERO;
+	BlinkLightState = LIGHT_INIT;
 
 	while (1)
 	{
-		if (ThreeElapsed >= 300)
-		{
-			TickThreeLEDsSM();
-			ThreeElapsed = 0;
-		}
-		if (BlinkingElapsed >= 1000)
-		{
-			TickBlinkingLEDSM();
-			BlinkingElapsed = 0;
-		}
-		TickCombineLEDsSM();
+		ThreeLEDsSM();
+		BlinkingLEDSM();
+		CombineLEDsSM();
 		while (!TimerFlag)
 		{
 		};
 		TimerFlag = 0;
-		ThreeElapsed += timerPeriod;
-		BlinkingElapsed += timerPeriod;
 	}
 	return 0;
 }
