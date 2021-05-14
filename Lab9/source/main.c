@@ -36,7 +36,7 @@ unsigned char blinkingLED = 0;
 unsigned char temp = 0x00;
 unsigned char sound = 0;
 unsigned char sounds[] = {1, 2, 3, 4, 5, 6};
-unsigned char temp2 = 0;
+unsigned char changefreq  = 0;
 
 void ThreeLEDsSM()
 {
@@ -158,11 +158,11 @@ void SPEAKER_SM()
 		break;
 
 	case SPEAKER_ON:
-		if (sound <= sounds[temp2])
+		if (sound <= sounds[changefreq])
 		{
 			temp = 0x01;
 		}
-		else if (sound <= (sounds[temp2] * 2))
+		else if (sound <= (sounds[changefreq] * 5))
 		{
 			temp = 0x00;
 		}
@@ -174,16 +174,16 @@ void SPEAKER_SM()
 		break;
 
 	case SPEAKER_INCRE_FREQ:
-		if (temp2 > 0)
+		if (changefreq > 0)
 		{
-			temp2--;
+			changefreq--;
 		}
 		break;
 
 	case SPEAKER_DECRE_FREQ:
-		if (temp2 < 6)
+		if (changefreq < 6)
 		{
-			temp2++;
+			changefreq++;
 		}
 		break;
 	}
