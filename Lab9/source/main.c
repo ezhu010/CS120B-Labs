@@ -155,7 +155,7 @@ int main(void)
 	PORTB = 0x00;
 	unsigned long ThreeLightTime = 0;
 	unsigned long BlinkLightTime = 0;
-	const unsigned long period = 100;
+	const unsigned long period = 1;
 	TimerSet(1);
 	TimerOn();
 	ThreeLightState = LIGHT_ZERO;
