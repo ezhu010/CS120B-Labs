@@ -20,7 +20,10 @@ enum BlinkLightStates
 enum SPEAKER_STATES
 {
 	SPEAKER_OFF,
-	SPEAKER_ON
+	SPEAKER_ON,
+	SPEAKER_INCRE_FREQ,
+	SPEAKER_DECRE_FREQ,
+	SPEAKER_RELEASE,
 } SPEAKER_STATE;
 
 enum CombineLightStates
@@ -32,6 +35,8 @@ unsigned char threeLEDs = 0;
 unsigned char blinkingLED = 0;
 unsigned char temp = 0x00;
 unsigned char sound = 0;
+unsigned char sounds[] = {1, 2, 3, 4, 5, 6};
+unsigned char temp2 = 0;
 
 void ThreeLEDsSM()
 {
@@ -96,23 +101,51 @@ void SPEAKER_SM()
 	switch (SPEAKER_STATE)
 	{
 	case SPEAKER_OFF:
-		if ((~PINA & 0x04) == 0x04)
+		if ((~PINA & 0x07) == 0x04)
 		{
 			SPEAKER_STATE = SPEAKER_ON;
+		}
+		else if ((~PINA & 0x07) == 0x01)
+		{
+			SPEAKER_STATE = SPEAKER_INCRE_FREQ;
+		}
+		else if ((~PINA & 0x07) == 0x02)
+		{
+			SPEAKER_STATE = SPEAKER_DECRE_FREQ;
 		}
 		else
 		{
 			SPEAKER_STATE = SPEAKER_OFF;
 		}
 		break;
+
 	case SPEAKER_ON:
-		if ((~PINA & 0x04) == 0x00)
+		if ((~PINA & 0x07) == 0x00)
 		{
 			SPEAKER_STATE = SPEAKER_OFF;
 		}
 		else
 		{
 			SPEAKER_STATE = SPEAKER_ON;
+		}
+		break;
+
+	case SPEAKER_DECRE_FREQ:
+		SPEAKER_STATE = SPEAKER_RELEASE;
+		break;
+
+	case SPEAKER_INCRE_FREQ:
+		SPEAKER_STATE = SPEAKER_RELEASE;
+		break;
+
+	case SPEAKER_RELEASE:
+		if ((~PINA & 0x07) == 0x00)
+		{
+			SPEAKER_STATE = SPEAKER_OFF;
+		}
+		else
+		{
+			SPEAKER_STATE = SPEAKER_RELEASE;
 		}
 		break;
 	}
@@ -120,16 +153,16 @@ void SPEAKER_SM()
 	{
 
 	case SPEAKER_OFF:
-		temp = 0;
+		temp = 0x00;
 		sound = 0;
 		break;
 
 	case SPEAKER_ON:
-		if (sound <= 2)
+		if (sound <= sounds[temp2])
 		{
 			temp = 0x01;
 		}
-		else if (sound <= 4)
+		else if (sound <= (sounds[j] * 2))
 		{
 			temp = 0x00;
 		}
@@ -137,7 +170,21 @@ void SPEAKER_SM()
 		{
 			sound = 0;
 		}
-		sound++;
+		++sound;
+		break;
+
+	case SPEAKER_INCRE_FREQ:
+		if (temp2 > 0)
+		{
+			temp2--;
+		}
+		break;
+
+	case SPEAKER_DECRE_FREQ:
+		if (temp2 < 6)
+		{
+			temp2++;
+		}
 		break;
 	}
 }
