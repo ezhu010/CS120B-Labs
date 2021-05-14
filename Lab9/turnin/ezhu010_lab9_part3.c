@@ -26,12 +26,14 @@ enum SPEAKER_STATES
 
 enum CombineLightStates
 {
-    CombineInit
+    COMBINE_INIT
 } CombineLightState;
 
 unsigned char threeLEDs = 0;
 unsigned char blinkingLED = 0;
+unsigned char temp = 0;
 unsigned char sound = 0;
+
 void ThreeLEDsSM()
 {
     switch (ThreeLightState)
@@ -119,34 +121,31 @@ void SPEAKER_SM()
     {
 
     case SPEAKER_OFF:
-        sound = 0x00;
-        i = 0;
+        sound = 0;
+        temp = 0;
         break;
 
     case SPEAKER_ON:
-        if (i <= 2)
+        if (sound <= 2)
         {
-            sound = 0x01;
+            temp = 0x01;
         }
-        else if (i <= 4)
+        else if (sound <= 4)
         {
-            sound = 0x00;
+            temp = 0x00;
         }
         else
         {
-            i = 0;
+            sound = 0;
         }
-        ++i;
-        break;
-
-    default:
+        sound++;
         break;
     }
 }
 
 void CombineLEDsSM()
 {
-    PORTB = ((blinkingLED << 3) | (threeLEDs));
+    PORTB = ((temp << 4) | (blinkingLED << 3) | (threeLEDs));
 }
 
 int main(void)

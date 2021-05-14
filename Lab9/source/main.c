@@ -19,7 +19,6 @@ enum BlinkLightStates
 
 enum SPEAKER_STATES
 {
-	SPEAKER_INIT,
 	SPEAKER_OFF,
 	SPEAKER_ON
 } SPEAKER_STATE;
