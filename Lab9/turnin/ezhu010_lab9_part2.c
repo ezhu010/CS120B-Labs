@@ -27,7 +27,6 @@ void ThreeLEDsSM()
 {
 	switch (ThreeLightState)
 	{
-
 	case LIGHT_ZERO:
 		ThreeLightState = LIGHT_ONE;
 		break;
