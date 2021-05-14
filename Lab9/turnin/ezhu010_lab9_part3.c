@@ -30,8 +30,8 @@ enum CombineLightStates
 
 unsigned char threeLEDs = 0;
 unsigned char blinkingLED = 0;
-unsigned char Speaker = 0x00;
-unsigned char i = 0;
+unsigned char temp = 0x00;
+unsigned char sound = 0;
 
 void ThreeLEDsSM()
 {
@@ -120,31 +120,31 @@ void SPEAKER_SM()
     {
 
     case SPEAKER_OFF:
-        Speaker = 0;
-        i = 0;
+        temp = 0;
+        sound = 0;
         break;
 
     case SPEAKER_ON:
-        if (i <= 2)
+        if (sound <= 2)
         {
-            Speaker = 0x01;
+            temp = 0x01;
         }
-        else if (i <= 4)
+        else if (sound <= 4)
         {
-            Speaker = 0x00;
+            temp = 0x00;
         }
         else
         {
-            i = 0;
+            sound = 0;
         }
-        i++;
+        sound++;
         break;
     }
 }
 
 void CombineLEDsSM()
 {
-    PORTB = ((Speaker << 4) | (blinkingLED << 3) | (threeLEDs));
+    PORTB = ((temp << 4) | (blinkingLED << 3) | (threeLEDs));
 }
 
 int main(void)
@@ -156,7 +156,7 @@ int main(void)
     unsigned long ThreeLightTime = 0;
     unsigned long BlinkLightTime = 0;
     const unsigned long period = 100;
-    TimerSet(100);
+    TimerSet(1);
     TimerOn();
     ThreeLightState = LIGHT_ZERO;
     BlinkLightState = LIGHT_INIT;
