@@ -16,17 +16,28 @@ enum BlinkLightStates
 	LIGHT_INIT,
 	LIGHT_BLINK
 } BlinkLightState;
+
+enum SPEAKER_STATES
+{
+	SPEAKER_OFF,
+	SPEAKER_ON
+} SPEAKER_STATE;
+
 enum CombineLightStates
 {
-	CombineInit
+	COMBINE_INIT
 } CombineLightState;
-unsigned char threeLEDs = 0x00;
-unsigned char blinkingLED = 0x00;
+
+unsigned char threeLEDs = 0;
+unsigned char blinkingLED = 0;
+unsigned char temp = 0x00;
+unsigned char sound = 0;
 
 void ThreeLEDsSM()
 {
 	switch (ThreeLightState)
 	{
+
 	case LIGHT_ZERO:
 		ThreeLightState = LIGHT_ONE;
 		break;
@@ -80,9 +91,60 @@ void BlinkingLEDSM()
 	}
 }
 
+void SPEAKER_SM()
+{
+	switch (SPEAKER_STATE)
+	{
+	case SPEAKER_OFF:
+		if ((~PINA & 0x04) == 0x04)
+		{
+			SPEAKER_STATE = SPEAKER_ON;
+		}
+		else
+		{
+			SPEAKER_STATE = SPEAKER_OFF;
+		}
+		break;
+	case SPEAKER_ON:
+		if ((~PINA & 0x04) == 0x00)
+		{
+			SPEAKER_STATE = SPEAKER_OFF;
+		}
+		else
+		{
+			SPEAKER_STATE = SPEAKER_ON;
+		}
+		break;
+	}
+	switch (SPEAKER_STATE)
+	{
+
+	case SPEAKER_OFF:
+		temp = 0;
+		sound = 0;
+		break;
+
+	case SPEAKER_ON:
+		if (sound <= 2)
+		{
+			temp = 0x01;
+		}
+		else if (sound <= 4)
+		{
+			temp = 0x00;
+		}
+		else
+		{
+			sound = 0;
+		}
+		sound++;
+		break;
+	}
+}
+
 void CombineLEDsSM()
 {
-	PORTB = ((blinkingLED << 3) | (threeLEDs));
+	PORTB = ((temp << 4) | (blinkingLED << 3) | (threeLEDs));
 }
 
 int main(void)
@@ -93,11 +155,12 @@ int main(void)
 	PORTB = 0x00;
 	unsigned long ThreeLightTime = 0;
 	unsigned long BlinkLightTime = 0;
-	const unsigned long period = 1;
+	const unsigned long period = 100;
 	TimerSet(1);
 	TimerOn();
 	ThreeLightState = LIGHT_ZERO;
 	BlinkLightState = LIGHT_INIT;
+	SPEAKER_STATE = SPEAKER_OFF;
 
 	while (1)
 	{
@@ -111,6 +174,7 @@ int main(void)
 			BlinkingLEDSM();
 			BlinkLightTime = 0;
 		}
+		SPEAKER_SM();
 		CombineLEDsSM();
 		while (!TimerFlag)
 		{
