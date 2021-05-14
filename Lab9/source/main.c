@@ -162,7 +162,7 @@ void SPEAKER_SM()
 		{
 			temp = 0x01;
 		}
-		else if (sound <= (sounds[j] * 2))
+		else if (sound <= (sounds[temp2] * 2))
 		{
 			temp = 0x00;
 		}
