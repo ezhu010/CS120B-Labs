@@ -36,6 +36,10 @@ unsigned char GetKeypadKey()
     {
         return ('2');
     }
+    if (GetBit(PINC, 0) == 0)
+    {
+        return ('5');
+    }
 
     PORTC = 0xBF;
     asm("nop");
@@ -63,6 +67,8 @@ int main(void)
         case '2':
             PORTB = 0x02;
             break;
+        case '3':
+            PORTB = 0x03;
         case 'D':
             PORTB = 0x0D;
             break;
