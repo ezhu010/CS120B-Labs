@@ -72,6 +72,18 @@ unsigned char GetKeypadKey()
     {
         return ('A');
     }
+    if (GetBit(PINC, 1) == 0)
+    {
+        return ('B');
+    }
+    if (GetBit(PINC, 2) == 0)
+    {
+        return ('C');
+    }
+    if (GetBit(PINC, 3) == 0)
+    {
+        return ('D');
+    }
 
     return ('\0');
 }
@@ -120,6 +132,12 @@ int main(void)
             break;
         case 'A':
             PORTB = 0x0A;
+            break;
+        case 'B':
+            PORTB = 0x0B;
+            break;
+        case 'C':
+            PORTB = 0x0C;
             break;
         case 'D':
             PORTB = 0x0D;
