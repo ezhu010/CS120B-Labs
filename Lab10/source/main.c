@@ -44,9 +44,17 @@ unsigned char GetKeypadKey()
     {
         return ('8');
     }
+    if (GetBit(PINC, 3) == 0)
+    {
+        return ('0');
+    }
 
     PORTC = 0xBF;
     asm("nop");
+    if (GetBit(PINC, 0) == 0)
+    {
+        return ('3');
+    }
 
     return ('\0');
 }
