@@ -39,7 +39,7 @@ unsigned char GetKeypadKey()
 
     PORTC = 0xBF;
     asm("nop");
-    return ('\0')
+    return ('\0');
 }
 
 int main(void)
