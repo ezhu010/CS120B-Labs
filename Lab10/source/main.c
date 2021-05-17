@@ -54,7 +54,7 @@ int main(void)
         x = GetKeypadKey();
         switch (x)
         {
-        case '/0':
+        case '\0':
             PORTB = 0x1F;
             break;
         case '1':
