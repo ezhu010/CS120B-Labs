@@ -6,7 +6,6 @@
 
 typedef struct task
 {
-
     signed char state;
     unsigned long period;
     unsigned long elapsedTime; //Time elapsed since last task tick
@@ -99,35 +98,26 @@ unsigned char GetKeypadKey()
 unsigned char x = 0x00;
 unsigned char keypad = 0x00;
 
-enum KeypadStates
+enum KEYPADSTATES
 {
-    Start,
-    Init
+    KEYPAD_INIT
 };
-int KeypadTick(int state)
+int KEYPAD_SM(int state)
 {
     x = GetKeypadKey();
     switch (state)
     {
-    case Start:
-        state = Init;
-        break;
-    case Init:
-        state = Init;
-        break;
-    default:
-        state = Start;
+    case KEYPAD_INIT:
+        state = KEYPAD_INIT;
         break;
     }
     switch (state)
     {
-    case Start:
-        break;
-    case Init:
+    case KEYPAD_INIT:
         switch (x)
         {
         case '\0':
-            keypad = 0x80;
+            keypad = 0x00;
             break;
         case '1':
             keypad = 0x80;
@@ -183,16 +173,12 @@ int KeypadTick(int state)
         }
         PORTB = keypad;
         break;
-
-    default:
-        break;
     }
     return state;
 }
 
 int main(void)
 {
-    /* Insert DDR and PORT initializations */
     DDRB = 0xFF;
     PORTB = 0x00;
     DDRC = 0xF0;
@@ -205,7 +191,7 @@ int main(void)
     task1.state = start;
     task1.period = 50;
     task1.elapsedTime = task1.period;
-    task1.TickFct = &KeypadTick;
+    task1.TickFct = &KEYPAD_SM;
 
     TimerSet(50);
     TimerOn();
