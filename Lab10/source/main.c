@@ -177,7 +177,7 @@ int main(void)
                 tasks[i]->state = tasks[i]->TickFct(tasks[i]->state);
                 tasks[i]->elaspedTime = 0;
             }
-            tasks[i]->elaspedTime = 0;
+            tasks[i]->elaspedTime += 10;
         }
         while (!TimerFlag)
         {
