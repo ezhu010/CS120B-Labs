@@ -4,22 +4,6 @@
 #include "simAVRHeader.h"
 #endif
 
-unsigned long int findGCD(unsigned long int a, unsigned long int b)
-{
-    unsigned long int c;
-    while (1)
-    {
-        c = a % b;
-        if (c == 0)
-        {
-            return b;
-        }
-        a = b;
-        b = c;
-    }
-    return 0;
-}
-
 typedef struct task
 {
 
@@ -146,55 +130,55 @@ int KeypadTick(int state)
             keypad = 0x1F;
             break;
         case '1':
-            keypad = 0x01;
+            keypad = 0x80;
             break;
         case '2':
-            keypad = 0x02;
+            keypad = 0x80;
             break;
         case '3':
-            keypad = 0x03;
+            keypad = 0x80;
             break;
         case '4':
-            keypad = 0x04;
+            keypad = 0x80;
             break;
         case '5':
-            keypad = 0x05;
+            keypad = 0x80;
             break;
         case '6':
-            keypad = 0x06;
+            keypad = 0x80;
             break;
         case '7':
-            keypad = 0x07;
+            keypad = 0x80;
             break;
         case '8':
-            keypad = 0x08;
+            keypad = 0x80;
             break;
         case '9':
-            keypad = 0x09;
+            keypad = 0x80;
             break;
         case 'A':
-            keypad = 0x0A;
+            keypad = 0x80;
             break;
         case 'B':
-            keypad = 0x0B;
+            keypad = 0x80;
             break;
         case 'C':
-            keypad = 0x0C;
+            keypad = 0x80;
             break;
         case 'D':
-            keypad = 0x0D;
+            keypad = 0x80;
             break;
         case '*':
-            keypad = 0x0E;
+            keypad = 0x80;
             break;
         case '0':
-            keypad = 0x00;
+            keypad = 0x80;
             break;
         case '#':
-            keypad = 0x0F;
+            keypad = 0x80;
             break;
         default:
-            keypad = 0x1B;
+            keypad = 0x00;
             break;
         }
         PORTB = keypad;
