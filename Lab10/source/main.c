@@ -174,6 +174,7 @@ int main(void)
         {
             if (tasks[i]->elaspedTime == tasks[i]->period)
             {
+                PORTB = 0xFF;
                 tasks[i]->state = tasks[i]->TickFct(tasks[i]->state);
                 tasks[i]->elaspedTime = 0;
             }
