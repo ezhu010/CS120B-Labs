@@ -170,20 +170,20 @@ int main(void)
     unsigned short i;
     while (1)
     {
-        for (i = 0; i < numTasks; i++)
-        {
-            if (tasks[i]->elaspedTime == tasks[i]->period)
-            {
-                PORTB = 0xFF;
-                tasks[i]->state = tasks[i]->TickFct(tasks[i]->state);
-                tasks[i]->elaspedTime = 0;
-            }
-            tasks[i]->elaspedTime += 10;
-        }
-        while (!TimerFlag)
-        {
-        };
-        TimerFlag = 0;
+        PORTB = 0xFF;
+        // for (i = 0; i < numTasks; i++)
+        // {
+        //     if (tasks[i]->elaspedTime == tasks[i]->period)
+        //     {
+        //         tasks[i]->state = tasks[i]->TickFct(tasks[i]->state);
+        //         tasks[i]->elaspedTime = 0;
+        //     }
+        //     tasks[i]->elaspedTime += 10;
+        // }
+        // while (!TimerFlag)
+        // {
+        // };
+        // TimerFlag = 0;
     }
     return 0;
 }
