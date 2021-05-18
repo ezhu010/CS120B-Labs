@@ -127,7 +127,7 @@ int KeypadTick(int state)
         switch (x)
         {
         case '\0':
-            keypad = 0x1F;
+            keypad = 0x80;
             break;
         case '1':
             keypad = 0x80;
