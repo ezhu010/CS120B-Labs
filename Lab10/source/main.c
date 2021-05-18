@@ -4,6 +4,31 @@
 #include "simAVRHeader.h"
 #endif
 
+unsigned long int findGCD(unsigned long int a, unsigned long int b)
+{
+    unsigned long int c;
+    while (1)
+    {
+        c = a % b;
+        if (c == 0)
+        {
+            return b;
+        }
+        a = b;
+        b = c;
+    }
+    return 0;
+}
+
+typedef struct task
+{
+
+    signed char state;
+    unsigned long period;
+    unsigned long elapsedTime; //Time elapsed since last task tick
+    int (*TickFct)(int);       //Task tick function
+} task;
+
 unsigned char GetBit(unsigned char x, unsigned char k)
 {
     return ((x & (0x01 << k)) != 0);
