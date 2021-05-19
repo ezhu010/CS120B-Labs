@@ -117,7 +117,7 @@ int KEYPAD_SM(int state)
     case KEYPAD_INIT:
         if (x != '#')
         {
-            password[5] = {0, 0, 0, 0, 0};
+            password = {0, 0, 0, 0, 0};
             state = KEYPAD_INIT;
         }
         else
