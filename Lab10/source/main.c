@@ -155,9 +155,6 @@ int KEYPAD_SM(int state)
             state = KEYPAD_INPUT;
         }
         break;
-    case KEYPAD_CHECK:
-        state = KEYPAD_INIT;
-        break;
     }
 
     switch (state)
@@ -175,6 +172,7 @@ int KEYPAD_SM(int state)
         {
             PORTB = 1;
         }
+        state = KEYPAD_INIT;
         break;
     }
     return state;
