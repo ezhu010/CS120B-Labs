@@ -135,7 +135,7 @@ int KEYPAD_SM(int state)
         }
         break;
     case KEYPAD_INPUT:
-        if (i < 5 && x != '\0')
+        if (i < 3 && x != '\0')
         {
             i++;
             state = KEYPAD_INPUT_RELEASE;
