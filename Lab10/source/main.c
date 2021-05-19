@@ -183,20 +183,44 @@ int KEYPAD_SM(int state)
     return state;
 }
 
+enum LOCK_STATES
+{
+    LOCK_INIT,
+};
+
+int DOOR_SM(int state)
+{
+    switch (state)
+    {
+    case LOCK_INIT:
+        if (~PINC & 0x80 == 1)
+        {
+            PORTB = 0;
+        }
+    }
+    return state;
+}
+
 int main(void)
 {
-    DDRB = 0xFF;
-    PORTB = 0x00;
+    DDRB = 0xF0;
+    PORTB = 0x0F;
     DDRC = 0xF0;
     PORTC = 0x0F;
-    static task task1;
-    task *tasks[] = {&task1};
+    static task task1, task2;
+
+    task *tasks[] = {&task1, &task2};
     const unsigned short numTasks = sizeof(tasks) / sizeof(task *);
     const char start = 0;
     task1.state = start;
     task1.period = 50;
     task1.elapsedTime = task1.period;
     task1.TickFct = &KEYPAD_SM;
+
+    task2.state = start;
+    task2.period = 50;
+    task2.elapsedTime = task1.period;
+    task2.TickFct = &DOOR_SM;
 
     TimerSet(50);
     TimerOn();
