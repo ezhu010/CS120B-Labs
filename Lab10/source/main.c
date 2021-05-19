@@ -183,28 +183,28 @@ int KEYPAD_SM(int state)
     return state;
 }
 
-enum LOCK_STATES
-{
-    LOCK_INIT,
-};
+// enum LOCK_STATES
+// {
+//     LOCK_INIT,
+// };
 
-int DOOR_SM(int state)
-{
-    switch (state)
-    {
-    case LOCK_INIT:
-        if ((PINC & 0x80) == 0x80)
-        {
-            PORTB = 1;
-        }
-    }
-    return state;
-}
+// int DOOR_SM(int state)
+// {
+//     switch (state)
+//     {
+//     case LOCK_INIT:
+//         if ((PINC & 0x80) == 0x80)
+//         {
+//             PORTB = 1;
+//         }
+//     }
+//     return state;
+// }
 
 int main(void)
 {
-    DDRB = 0xF0;
-    PORTB = 0x0F;
+    DDRB = 0xFF;
+    PORTB = 0xFF;
     DDRC = 0xF0;
     PORTC = 0x0F;
     static task task1;
