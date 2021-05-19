@@ -135,12 +135,12 @@ int KEYPAD_SM(int state)
         }
         break;
     case KEYPAD_INPUT:
-        if (i < 3 && x != '\0')
+        if (x != '\0')
         {
             i++;
             state = KEYPAD_INPUT_RELEASE;
         }
-        else
+        if (i == 3)
         {
             PORTB = 1;
         }
