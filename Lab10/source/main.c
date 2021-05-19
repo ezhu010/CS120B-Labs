@@ -239,7 +239,7 @@ int SPEAKER_SM(int state)
     switch (state)
     {
     case SPEAKER_OFF:
-        timerSet(50);
+        TimerSet(50);
         z = 0;
         set_PWM(0);
         break;
