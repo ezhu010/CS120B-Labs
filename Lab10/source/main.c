@@ -195,7 +195,7 @@ int DOOR_SM(int state)
     case LOCK_INIT:
         if (~PINC & 0x80 == 1)
         {
-            PORTB = 0;
+            PORTB = 1;
         }
     }
     return state;
