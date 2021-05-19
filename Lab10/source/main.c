@@ -155,6 +155,9 @@ int KEYPAD_SM(int state)
             state = KEYPAD_INPUT;
         }
         break;
+    case KEYPAD_CHECK:
+        state = KEYPAD_INIT;
+        break;
     }
 
     switch (state)
