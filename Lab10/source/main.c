@@ -157,41 +157,42 @@ int KEYPAD_SM(int state)
         }
         return state;
     }
+}
 
-    int main(void)
+int main(void)
+{
+    DDRB = 0xFF;
+    PORTB = 0x00;
+    DDRC = 0xF0;
+    PORTC = 0x0F;
+    static task task1;
+    task *tasks[] = {&task1};
+    const unsigned short numTasks = sizeof(tasks) / sizeof(task *);
+    const char start = 0;
+    task1.state = start;
+    task1.period = 200;
+    task1.elapsedTime = task1.period;
+    task1.TickFct = &KEYPAD_SM;
+
+    TimerSet(200);
+    TimerOn();
+
+    unsigned short i;
+    while (1)
     {
-        DDRB = 0xFF;
-        PORTB = 0x00;
-        DDRC = 0xF0;
-        PORTC = 0x0F;
-        static task task1;
-        task *tasks[] = {&task1};
-        const unsigned short numTasks = sizeof(tasks) / sizeof(task *);
-        const char start = 0;
-        task1.state = start;
-        task1.period = 200;
-        task1.elapsedTime = task1.period;
-        task1.TickFct = &KEYPAD_SM;
-
-        TimerSet(200);
-        TimerOn();
-
-        unsigned short i;
-        while (1)
+        for (i = 0; i < numTasks; ++i)
         {
-            for (i = 0; i < numTasks; ++i)
+            if (tasks[i]->elapsedTime == tasks[i]->period)
             {
-                if (tasks[i]->elapsedTime == tasks[i]->period)
-                {
-                    tasks[i]->state = tasks[i]->TickFct(tasks[i]->state);
-                    tasks[i]->elapsedTime = 0;
-                }
-                tasks[i]->elapsedTime += 50;
+                tasks[i]->state = tasks[i]->TickFct(tasks[i]->state);
+                tasks[i]->elapsedTime = 0;
             }
-            while (!TimerFlag)
-            {
-            };
-            TimerFlag = 0;
+            tasks[i]->elapsedTime += 50;
         }
-        return 1;
+        while (!TimerFlag)
+        {
+        };
+        TimerFlag = 0;
     }
+    return 1;
+}
