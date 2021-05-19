@@ -137,7 +137,6 @@ int KEYPAD_SM(int state)
     case KEYPAD_INPUT:
         if (x != '\0')
         {
-
             state = KEYPAD_INPUT_RELEASE;
         }
         if (i == 5)
@@ -163,10 +162,9 @@ int KEYPAD_SM(int state)
     case KEYPAD_RELEASE:
         break;
     case KEYPAD_INPUT:
-        password[i++] = x;
         break;
     case KEYPAD_INPUT_RELEASE:
-        i++;
+        password[i++] = x;
         break;
     case KEYPAD_CHECK:
         PORTB = 1;
