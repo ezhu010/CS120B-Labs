@@ -103,6 +103,7 @@ enum KEYPADSTATES
     KEYPAD_INIT,
     KEYPAD_RELEASE,
     KEYPAD_INPUT,
+    KEYPAD_INPUT_RELEASE,
     KEYPAD_CHECK
 };
 
@@ -137,51 +138,60 @@ int KEYPAD_SM(int state)
         if (i < 5 && x != '\0')
         {
             i++;
-            state = KEYPAD_INPUT;
+            state = KEYPAD_INPUT_RELEASE;
+        }
+        if (i == 3)
+        {
+            PORTB = 0;
+        }
+        break;
+
+    case KEYPAD_INPUT_RELEASE:
+        if (x != '\0')
+        {
+            state = KEYPAD_INPUT_RELEASE;
         }
         else
         {
-            PORTB = 1;
+            state = KEYPAD_INPUT;
         }
-        break;
+        return state;
     }
-    return state;
-}
 
-int main(void)
-{
-    DDRB = 0xFF;
-    PORTB = 0x00;
-    DDRC = 0xF0;
-    PORTC = 0x0F;
-    static task task1;
-    task *tasks[] = {&task1};
-    const unsigned short numTasks = sizeof(tasks) / sizeof(task *);
-    const char start = 0;
-    task1.state = start;
-    task1.period = 200;
-    task1.elapsedTime = task1.period;
-    task1.TickFct = &KEYPAD_SM;
-
-    TimerSet(200);
-    TimerOn();
-
-    unsigned short i;
-    while (1)
+    int main(void)
     {
-        for (i = 0; i < numTasks; ++i)
+        DDRB = 0xFF;
+        PORTB = 0x00;
+        DDRC = 0xF0;
+        PORTC = 0x0F;
+        static task task1;
+        task *tasks[] = {&task1};
+        const unsigned short numTasks = sizeof(tasks) / sizeof(task *);
+        const char start = 0;
+        task1.state = start;
+        task1.period = 200;
+        task1.elapsedTime = task1.period;
+        task1.TickFct = &KEYPAD_SM;
+
+        TimerSet(200);
+        TimerOn();
+
+        unsigned short i;
+        while (1)
         {
-            if (tasks[i]->elapsedTime == tasks[i]->period)
+            for (i = 0; i < numTasks; ++i)
             {
-                tasks[i]->state = tasks[i]->TickFct(tasks[i]->state);
-                tasks[i]->elapsedTime = 0;
+                if (tasks[i]->elapsedTime == tasks[i]->period)
+                {
+                    tasks[i]->state = tasks[i]->TickFct(tasks[i]->state);
+                    tasks[i]->elapsedTime = 0;
+                }
+                tasks[i]->elapsedTime += 50;
             }
-            tasks[i]->elapsedTime += 50;
+            while (!TimerFlag)
+            {
+            };
+            TimerFlag = 0;
         }
-        while (!TimerFlag)
-        {
-        };
-        TimerFlag = 0;
+        return 1;
     }
-    return 1;
-}
