@@ -142,7 +142,7 @@ int KEYPAD_SM(int state)
         }
         if (i == 3)
         {
-            PORTB = 0;
+            PORTB = 1;
         }
         break;
     case KEYPAD_INPUT_RELEASE:
