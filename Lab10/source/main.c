@@ -103,8 +103,11 @@ enum KEYPADSTATES
     KEYPAD_INIT,
     KEYPAD_RELEASE,
     KEYPAD_INPUT,
-    // KEYPAD_CHECK
+    KEYPAD_CHECK
 };
+
+unsigned char password[5] = {0, 0, 0, 0, 0};
+int i = 0;
 int KEYPAD_SM(int state)
 {
     x = GetKeypadKey();
@@ -131,9 +134,15 @@ int KEYPAD_SM(int state)
         }
         break;
     case KEYPAD_INPUT:
-        if (x == '1')
+        if (i != 5 && x != '\0')
+        {
+            i++;
+            state = KEYPAD_INPUT;
+        }
+        else
         {
             PORTB = 1;
+            state = KEYPAD_CHECK;
         }
         break;
     }
