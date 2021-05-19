@@ -101,8 +101,8 @@ unsigned char keypad = 0x00;
 enum KEYPADSTATES
 {
     KEYPAD_INIT,
-    // KEYPAD_RELEASE,
-    // KEYPAD_INPUT,
+    KEYPAD_RELEASE,
+    KEYPAD_INPUT,
     // KEYPAD_CHECK
 };
 int KEYPAD_SM(int state)
@@ -113,12 +113,26 @@ int KEYPAD_SM(int state)
     case KEYPAD_INIT:
         if (x != '#')
         {
-            PORTB = 0;
+            state = KEYPAD_INIT;
         }
         else
         {
-            PORTB = 1;
+            state = KEYPAD_RELEASE;
         }
+        break;
+    case KEYPAD_RELEASE:
+        if (x == '#')
+        {
+            state = KEYPAD_RELEASE;
+        }
+        else
+        {
+            state = KEYPAD_INPUT;
+        }
+        break;
+    case KEYPAD_INPUT:
+        PORTB = 1;
+        break;
     }
     return state;
 }
