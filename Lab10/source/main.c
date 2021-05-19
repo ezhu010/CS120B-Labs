@@ -205,8 +205,8 @@ int main(void)
 {
     DDRB = 0xF0;
     PORTB = 0x0F;
-    DDRC = 0xF0;
-    PORTC = 0x0F;
+    DDRC = 0x00;
+    PORTC = 0xFF;
     static task task1, task2;
 
     task *tasks[] = {&task1, &task2};
