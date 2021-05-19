@@ -212,5 +212,5 @@ int main(void)
             ;
         TimerFlag = 0;
     }
-    return 1;
+    return 0;
 }

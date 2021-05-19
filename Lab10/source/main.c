@@ -100,7 +100,10 @@ unsigned char keypad = 0x00;
 
 enum KEYPADSTATES
 {
-    KEYPAD_INIT
+    KEYPAD_INIT,
+    // KEYPAD_RELEASE,
+    // KEYPAD_INPUT,
+    // KEYPAD_CHECK
 };
 int KEYPAD_SM(int state)
 {
@@ -108,71 +111,14 @@ int KEYPAD_SM(int state)
     switch (state)
     {
     case KEYPAD_INIT:
-        state = KEYPAD_INIT;
-        break;
-    }
-    switch (state)
-    {
-    case KEYPAD_INIT:
-        switch (x)
+        if (x != '#')
         {
-        case '\0':
-            keypad = 0x00;
-            break;
-        case '1':
-            keypad = 0x80;
-            break;
-        case '2':
-            keypad = 0x80;
-            break;
-        case '3':
-            keypad = 0x80;
-            break;
-        case '4':
-            keypad = 0x80;
-            break;
-        case '5':
-            keypad = 0x80;
-            break;
-        case '6':
-            keypad = 0x80;
-            break;
-        case '7':
-            keypad = 0x80;
-            break;
-        case '8':
-            keypad = 0x80;
-            break;
-        case '9':
-            keypad = 0x80;
-            break;
-        case 'A':
-            keypad = 0x80;
-            break;
-        case 'B':
-            keypad = 0x80;
-            break;
-        case 'C':
-            keypad = 0x80;
-            break;
-        case 'D':
-            keypad = 0x80;
-            break;
-        case '*':
-            keypad = 0x80;
-            break;
-        case '0':
-            keypad = 0x80;
-            break;
-        case '#':
-            keypad = 0x80;
-            break;
-        default:
-            keypad = 0x00;
-            break;
+            PORTB = 0;
         }
-        PORTB = keypad;
-        break;
+        else
+        {
+            PORTB = 1;
+        }
     }
     return state;
 }
@@ -183,7 +129,6 @@ int main(void)
     PORTB = 0x00;
     DDRC = 0xF0;
     PORTC = 0x0F;
-    /* Insert your solution below */
     static task task1;
     task *tasks[] = {&task1};
     const unsigned short numTasks = sizeof(tasks) / sizeof(task *);
@@ -209,7 +154,8 @@ int main(void)
             tasks[i]->elapsedTime += 50;
         }
         while (!TimerFlag)
-            ;
+        {
+        };
         TimerFlag = 0;
     }
     return 1;
