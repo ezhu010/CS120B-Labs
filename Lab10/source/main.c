@@ -137,6 +137,7 @@ int KEYPAD_SM(int state)
     case KEYPAD_INPUT:
         if (x != '\0')
         {
+            i++;
             state = KEYPAD_INPUT_RELEASE;
         }
         if (i == 5)
