@@ -145,7 +145,6 @@ int KEYPAD_SM(int state)
             PORTB = 0;
         }
         break;
-
     case KEYPAD_INPUT_RELEASE:
         if (x != '\0')
         {
@@ -155,8 +154,8 @@ int KEYPAD_SM(int state)
         {
             state = KEYPAD_INPUT;
         }
-        return state;
     }
+    return state;
 }
 
 int main(void)
