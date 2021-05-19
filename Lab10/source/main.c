@@ -134,14 +134,14 @@ int KEYPAD_SM(int state)
         }
         break;
     case KEYPAD_INPUT:
-        if (i != 5 && x != '\0')
-        {
-            i++;
-            state = KEYPAD_INPUT;
-        }
-        else if (i == 5)
+        if (x == '\0')
         {
             PORTB = 1;
+            state = KEYPAD_INPUT;
+        }
+        else
+        {
+            PORTB = 0;
             state = KEYPAD_CHECK;
         }
         break;
