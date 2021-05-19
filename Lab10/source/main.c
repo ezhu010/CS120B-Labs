@@ -193,7 +193,7 @@ int DOOR_SM(int state)
     switch (state)
     {
     case LOCK_INIT:
-        if ((PINC & 0x80) == 1)
+        if ((PINC & 0x80) == 0x80)
         {
             PORTB = 1;
         }
@@ -205,8 +205,8 @@ int main(void)
 {
     DDRB = 0xF0;
     PORTB = 0x0F;
-    DDRC = 0x00;
-    PORTC = 0xFF;
+    DDRC = 0xF0;
+    PORTC = 0x0F;
     static task task1, task2;
 
     task *tasks[] = {&task1, &task2};
