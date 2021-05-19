@@ -207,7 +207,7 @@ int main(void)
     PORTB = 0x0F;
     DDRC = 0xF0;
     PORTC = 0x0F;
-    static task task1, task2;
+    static task task1;
 
     task *tasks[] = {&task1};
     const unsigned short numTasks = sizeof(tasks) / sizeof(task *);
