@@ -113,7 +113,6 @@ int KEYPAD_SM(int state)
     case KEYPAD_INIT:
         if (x != '#')
         {
-            PORTB = 1;
             state = KEYPAD_INIT;
         }
         else
@@ -132,8 +131,10 @@ int KEYPAD_SM(int state)
         }
         break;
     case KEYPAD_INPUT:
-        PORTB = 0;
-        state = KEYPAD_INIT;
+        if (x == '1')
+        {
+            PORTB = 1;
+        }
         break;
     }
     return state;
