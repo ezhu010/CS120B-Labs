@@ -204,7 +204,7 @@ int KEYPAD_SM(int state)
 int main(void)
 {
     DDRB = 0xFF;
-    PORTB = 0xFF;
+    PORTB = 0x00;
     DDRC = 0xF0;
     PORTC = 0x0F;
     static task task1;
