@@ -141,7 +141,7 @@ int KEYPAD_SM(int state)
         }
         else
         {
-            PORTB = 0;
+            PORTB = 1;
         }
         break;
     }
