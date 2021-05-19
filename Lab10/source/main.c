@@ -269,6 +269,7 @@ int main(void)
 
     TimerSet(50);
     TimerOn();
+    PWM_on();
 
     unsigned short i;
     while (1)
