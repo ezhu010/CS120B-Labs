@@ -205,7 +205,7 @@ int main(void)
 {
     DDRB = 0xF0;
     PORTB = 0x0F;
-    DDRC = 0xF0;
+    DDRC = 0x0F;
     PORTC = 0x0F;
     static task task1;
 
