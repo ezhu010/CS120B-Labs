@@ -142,7 +142,6 @@ int KEYPAD_SM(int state)
         else
         {
             PORTB = 0;
-            state = KEYPAD_CHECK;
         }
         break;
     }
