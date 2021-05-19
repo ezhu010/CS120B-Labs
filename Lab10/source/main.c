@@ -134,9 +134,9 @@ int KEYPAD_SM(int state)
         }
         break;
     case KEYPAD_INPUT:
-        if (i < 5)
+        if (i < 5 && x != '\0')
         {
-            PORTB = 0;
+            i++;
             state = KEYPAD_INPUT;
         }
         else
@@ -159,11 +159,11 @@ int main(void)
     const unsigned short numTasks = sizeof(tasks) / sizeof(task *);
     const char start = 0;
     task1.state = start;
-    task1.period = 50;
+    task1.period = 200;
     task1.elapsedTime = task1.period;
     task1.TickFct = &KEYPAD_SM;
 
-    TimerSet(50);
+    TimerSet(200);
     TimerOn();
 
     unsigned short i;
