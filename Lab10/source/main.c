@@ -239,11 +239,13 @@ int SPEAKER_SM(int state)
     switch (state)
     {
     case SPEAKER_OFF:
+        timerSet(50);
         z = 0;
         set_PWM(0);
         break;
 
     case SPEAKER_ON:
+        TimerSet(200);
         set_PWM(notes[z]);
         z++;
         break;
@@ -276,7 +278,7 @@ int main(void)
     task2.TickFct = &DOOR_SM;
 
     task3.state = start;
-    task3.period = 200;
+    task3.period = 50;
     task3.elapsedTime = task3.period;
     task3.TickFct = &SPEAKER_SM;
 
