@@ -220,6 +220,7 @@ int SPEAKER_SM(int state)
         }
         else
         {
+            set_PWM(0);
             state = SPEAKER_OFF;
         }
         break;
@@ -231,6 +232,7 @@ int SPEAKER_SM(int state)
         }
         else
         {
+            set_PWM(0);
             state = SPEAKER_OFF;
         }
         break;
