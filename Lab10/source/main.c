@@ -140,7 +140,6 @@ int KEYPAD_SM(int state)
             i++;
             state = KEYPAD_INPUT_RELEASE;
         }
-
         else
         {
             PORTB = 1;
