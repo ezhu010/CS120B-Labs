@@ -117,7 +117,6 @@ int KEYPAD_SM(int state)
     case KEYPAD_INIT:
         if (x != '#')
         {
-            password = {0, 0, 0, 0, 0};
             state = KEYPAD_INIT;
         }
         else
@@ -172,6 +171,11 @@ int KEYPAD_SM(int state)
         if (password[0] == '1' && password[1] == '2' && password[2] == '3' && password[3] == '4' && password[4] == '5')
         {
             PORTB = 1;
+        }
+        i = 0;
+        for (int j = 0; j < 5; j++)
+        {
+            password[j] = 0;
         }
         state = KEYPAD_INIT;
         break;
