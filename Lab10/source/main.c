@@ -139,7 +139,7 @@ int KEYPAD_SM(int state)
             i++;
             state = KEYPAD_INPUT;
         }
-        else
+        else if (i == 5)
         {
             PORTB = 1;
             state = KEYPAD_CHECK;
