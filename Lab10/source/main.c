@@ -209,7 +209,7 @@ int main(void)
     PORTC = 0x0F;
     static task task1, task2;
 
-    task *tasks[] = {&task1, &task2};
+    task *tasks[] = {&task1};
     const unsigned short numTasks = sizeof(tasks) / sizeof(task *);
     const char start = 0;
     task1.state = start;
@@ -217,10 +217,10 @@ int main(void)
     task1.elapsedTime = task1.period;
     task1.TickFct = &KEYPAD_SM;
 
-    task2.state = start;
-    task2.period = 50;
-    task2.elapsedTime = task1.period;
-    task2.TickFct = &DOOR_SM;
+    // task2.state = start;
+    // task2.period = 50;
+    // task2.elapsedTime = task2.period;
+    // task2.TickFct = &DOOR_SM;
 
     TimerSet(50);
     TimerOn();
