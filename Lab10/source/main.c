@@ -209,7 +209,7 @@ enum SPEAKER_STATES
 };
 
 int notes[14] = {261.33, 0, 261.33, 0, 392, 0, 392, 0, 440, 0, 440, 0, 392, -1};
-int x = 0;
+int z = 0;
 int SPEAKER_SM(int state)
 {
     switch (state)
@@ -225,7 +225,7 @@ int SPEAKER_SM(int state)
         }
         break;
     case SPEAKER_ON:
-        if (notes[x] != -1)
+        if (notes[z] != -1)
         {
             state = SPEAKER_ON;
         }
@@ -239,13 +239,13 @@ int SPEAKER_SM(int state)
     switch (state)
     {
     case SPEAKER_OFF:
-        x = 0;
+        z = 0;
         set_PWM(0);
         break;
 
     case SPEAKER_ON:
-        set_PWM(notes[x]);
-        x++;
+        set_PWM(notes[z]);
+        z++;
         break;
     }
     return state;
