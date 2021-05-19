@@ -1,5 +1,5 @@
 #include <avr/io.h>
-#include <timer.h>
+#include "timer.h"
 #ifdef _SIMULATE_
 #include "simAVRHeader.h"
 #endif

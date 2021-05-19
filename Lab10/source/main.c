@@ -1,8 +1,9 @@
 #include <avr/io.h>
-#include <timer.h>
+#include "timer.h"
 #ifdef _SIMULATE_
 #include "simAVRHeader.h"
 #endif
+#include "speaker.h"
 
 typedef struct task
 {
@@ -201,15 +202,54 @@ int DOOR_SM(int state)
     return state;
 }
 
+enum SPEAKER_STATES
+{
+    SPEAKER_OFF,
+    SPEAKER_ON
+};
+
+int SPEAKER_SM(int state)
+{
+    switch (state)
+    {
+    case SPEAKER_OFF:
+        if ((~PINA & 0x80) == 0x80)
+        {
+            set_PWM(261.63);
+            state = SPEAKER_ON;
+        }
+        else
+        {
+            state = SPEAKER_OFF;
+        }
+        break;
+    case SPEAKER_ON:
+        if ((~PINA & 0x80) == 0x80)
+        {
+            set_PWM(261.63);
+            state = SPEAKER_ON;
+        }
+        else
+        {
+            state = SPEAKER_OFF;
+        }
+        break;
+    }
+    return state;
+}
+
 int main(void)
 {
+
+    DDRA = 0x00;
+    PORTA = 0xFF;
     DDRB = 0x0F;
     PORTB = 0xF0;
     DDRC = 0xF0;
     PORTC = 0x0F;
-    static task task1, task2;
+    static task task1, task2, task3;
 
-    task *tasks[] = {&task1, &task2};
+    task *tasks[] = {&task1, &task2, &task3};
     const unsigned short numTasks = sizeof(tasks) / sizeof(task *);
     const char start = 0;
     task1.state = start;
@@ -221,6 +261,11 @@ int main(void)
     task2.period = 50;
     task2.elapsedTime = task2.period;
     task2.TickFct = &DOOR_SM;
+
+    task3.state = start;
+    task3.period = 50;
+    task3.elapsedTime = task3.period;
+    task3.TickFct = &SPEAKER_SM;
 
     TimerSet(50);
     TimerOn();
