@@ -244,8 +244,8 @@ int main(void)
 
     DDRA = 0x00;
     PORTA = 0xFF;
-    DDRB = 0x0F;
-    PORTB = 0xF0;
+    DDRB = 0x4F;
+    PORTB = 0xB0;
     DDRC = 0xF0;
     PORTC = 0x0F;
     static task task1, task2, task3;
