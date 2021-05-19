@@ -168,7 +168,7 @@ int KEYPAD_SM(int state)
     case KEYPAD_INPUT_RELEASE:
         break;
     case KEYPAD_CHECK:
-        if (password[0] == '1' && password[1] == '2')
+        if (password[0] == '1' && password[1] == '2' && password[2] == '3' && password[3] == '4' && password[4] == '5')
         {
             PORTB = 1;
         }
