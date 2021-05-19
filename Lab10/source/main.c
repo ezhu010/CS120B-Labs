@@ -193,7 +193,7 @@ int DOOR_SM(int state)
     switch (state)
     {
     case LOCK_INIT:
-        if (~PINC & 0x80 == 1)
+        if ((~PINC & 0x80) == 1)
         {
             PORTB = 1;
         }
