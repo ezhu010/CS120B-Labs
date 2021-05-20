@@ -268,6 +268,10 @@ int CHANGE_PASS_SM(int state)
         {
             PORTB = 1;
         }
+        else
+        {
+            PORTB = 0;
+        }
     }
     return state;
 }
