@@ -295,7 +295,7 @@ int CHANGE_PASS_SM(int state)
         }
         else
         {
-            PASS_INPUT;
+            state = PASS_INPUT;
         }
     }
 
