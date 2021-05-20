@@ -256,9 +256,11 @@ int SPEAKER_SM(int state)
 
 enum CHANGE_PASS
 {
-    PASS_INIT
+    PASS_INIT,
+    PASS_INPUT
 };
 
+unsigned char count = 0;
 int CHANGE_PASS_SM(int state)
 {
     x = GetKeypadKey();
@@ -267,8 +269,33 @@ int CHANGE_PASS_SM(int state)
     case PASS_INIT:
         if ((~PINB & 0x80) == 0x80 && x == '*')
         {
-            PORTB = 1;
+            state = PASS_INPUT;
         }
+        else
+        {
+            state = PASS_INIT;
+        }
+        break;
+    case PASS_INPUT:
+        if (i == 5)
+        {
+            state = PASS_INIT;
+        }
+        else
+        {
+            state = PASS_INPUT;
+        }
+        break;
+    }
+
+    switch (state)
+    {
+    case PASS_INIT:
+        count = 0;
+        break;
+    case PASS_INPUT:
+        password[count++] = x;
+        break;
     }
     return state;
 }
