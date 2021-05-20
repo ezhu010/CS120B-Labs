@@ -110,7 +110,7 @@ enum KEYPADSTATES
 
 unsigned char input[5] = {0, 0, 0, 0, 0};
 unsigned char password[5] = {'1', '2', '3', '4', '5'};
-unsigned char int i = 0;
+int i = 0;
 int KEYPAD_SM(int state)
 {
     x = GetKeypadKey();
