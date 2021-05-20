@@ -257,7 +257,8 @@ int SPEAKER_SM(int state)
 enum CHANGE_PASS
 {
     PASS_INIT,
-    PASS_INPUT
+    PASS_INPUT,
+    PASS_INPUT_RELEASE
 };
 
 unsigned char count = 0;
@@ -284,9 +285,18 @@ int CHANGE_PASS_SM(int state)
         }
         else
         {
-            state = PASS_INPUT;
+            state = PASS_INPUT_RELEASE;
         }
         break;
+    case PASS_INPUT_RELEASE:
+        if (x != '\0')
+        {
+            state = PASS_INPUT_RELEASE;
+        }
+        else
+        {
+            PASS_INPUT;
+        }
     }
 
     switch (state)
@@ -296,6 +306,8 @@ int CHANGE_PASS_SM(int state)
         break;
     case PASS_INPUT:
         password[count++] = x;
+        break;
+    case PASS_INPUT_RELEASE:
         break;
     }
     return state;
