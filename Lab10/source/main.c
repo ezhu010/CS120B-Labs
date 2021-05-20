@@ -108,8 +108,9 @@ enum KEYPADSTATES
     KEYPAD_CHECK
 };
 
-unsigned char password[5] = {0, 0, 0, 0, 0};
-int i = 0;
+unsigned char input[5] = {0, 0, 0, 0, 0};
+unsigned char password[5] = {'1', '2', '3', '4', '5'};
+unsigned char int i = 0;
 int KEYPAD_SM(int state)
 {
     x = GetKeypadKey();
@@ -138,7 +139,7 @@ int KEYPAD_SM(int state)
     case KEYPAD_INPUT:
         if (x != '\0')
         {
-            password[i++] = x;
+            input[i++] = x;
             state = KEYPAD_INPUT_RELEASE;
         }
         if (i == 5)
@@ -169,14 +170,14 @@ int KEYPAD_SM(int state)
     case KEYPAD_INPUT_RELEASE:
         break;
     case KEYPAD_CHECK:
-        if (password[0] == '1' && password[1] == '2' && password[2] == '3' && password[3] == '4' && password[4] == '5')
+        if (input[0] == password[0] && input[1] == password[1] && input[2] == password[2] && input[3] == password[3] && input[4] == password[4])
         {
             PORTB = 1;
         }
         i = 0;
         for (int j = 0; j < 5; j++)
         {
-            password[j] = 0;
+            input[j] = 0;
         }
         state = KEYPAD_INIT;
         break;
@@ -267,10 +268,6 @@ int CHANGE_PASS_SM(int state)
         if ((~PINB & 0x80) == 0x80 && x == '*')
         {
             PORTB = 1;
-        }
-        else
-        {
-            PORTB = 0;
         }
     }
     return state;
