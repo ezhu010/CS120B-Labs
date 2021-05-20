@@ -269,7 +269,6 @@ int CHANGE_PASS_SM(int state)
     case PASS_INIT:
         if ((~PINB & 0x80) == 0x80 && x == '*')
         {
-            PORTB = 1;
             state = PASS_INPUT;
         }
         else
