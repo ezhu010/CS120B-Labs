@@ -278,7 +278,7 @@ int CHANGE_PASS_SM(int state)
         }
         break;
     case PASS_INPUT:
-        if (i == 5)
+        if (count == 5)
         {
             PORTB = 1;
             state = PASS_INIT;
