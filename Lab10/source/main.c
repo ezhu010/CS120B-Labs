@@ -253,6 +253,25 @@ int SPEAKER_SM(int state)
     return state;
 }
 
+enum CHANGE_PASS
+{
+    PASS_INIT
+};
+
+int CHANGE_PASS_SM(int state)
+{
+    x = GetKeypadKey();
+    switch (state)
+    {
+    case PASS_INIT:
+        if ((~PINB & 0x80) == 0x80 && x == '*')
+        {
+            PORTB = 1;
+        }
+    }
+    return state;
+}
+
 int main(void)
 {
 
@@ -262,9 +281,9 @@ int main(void)
     PORTB = 0xB0;
     DDRC = 0xF0;
     PORTC = 0x0F;
-    static task task1, task2, task3;
+    static task task1, task2, task3, task4;
 
-    task *tasks[] = {&task1, &task2, &task3};
+    task *tasks[] = {&task1, &task2, &task3, &task4};
     const unsigned short numTasks = sizeof(tasks) / sizeof(task *);
     const char start = 0;
     task1.state = start;
@@ -281,6 +300,11 @@ int main(void)
     task3.period = 50;
     task3.elapsedTime = task3.period;
     task3.TickFct = &SPEAKER_SM;
+
+    task4.state = start;
+    task4.period = 50;
+    task4.elapsedTime = task4.period;
+    task4.TickFct = &CHANGE_PASS_SM;
 
     TimerSet(50);
     TimerOn();
