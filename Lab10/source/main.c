@@ -257,6 +257,7 @@ int SPEAKER_SM(int state)
 enum CHANGE_PASS
 {
     PASS_INIT,
+    PASS_RELEASE,
     PASS_INPUT,
     PASS_INPUT_RELEASE
 };
@@ -270,11 +271,21 @@ int CHANGE_PASS_SM(int state)
     case PASS_INIT:
         if ((~PINB & 0x80) == 0x80 && x == '*')
         {
-            state = PASS_INPUT;
+            state = PASS_RELEASE;
         }
         else
         {
             state = PASS_INIT;
+        }
+        break;
+    case PASS_RELEASE:
+        if ((~PINB & 0x80) == 0x80 && x == '*')
+        {
+            state = PASS_RELEASE;
+        }
+        else
+        {
+            state = PASS_INPUT;
         }
         break;
     case PASS_INPUT:
