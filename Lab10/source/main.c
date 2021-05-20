@@ -292,7 +292,7 @@ int CHANGE_PASS_SM(int state)
         if (x != '\0')
         {
             count++;
-            state = PASS_INPUT;
+            state = PASS_INPUT_RELEASE;
         }
         else if (count == 5)
         {
