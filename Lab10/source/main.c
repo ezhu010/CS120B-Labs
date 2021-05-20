@@ -291,12 +291,14 @@ int CHANGE_PASS_SM(int state)
     case PASS_INPUT:
         if (x != '\0')
         {
-            state = PASS_INPUT_RELEASE;
-        }
-        else
-        {
+            count++;
             state = PASS_INPUT;
         }
+        else if (count == 5)
+        {
+            PORTB = 1;
+        }
+
         break;
     case PASS_INPUT_RELEASE:
         if (x != '\0')
@@ -317,7 +319,6 @@ int CHANGE_PASS_SM(int state)
     case PASS_INPUT:
         break;
     case PASS_INPUT_RELEASE:
-        password[count++] = x;
         break;
     }
     return state;
