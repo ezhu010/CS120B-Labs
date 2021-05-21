@@ -294,7 +294,7 @@ int CHANGE_PASS_SM(int state)
             password[count++] = x;
             state = PASS_INPUT_RELEASE;
         }
-        else if (count == 5)
+        else if ((~PINB & 0x80) == 0x80 && x == '*')
         {
             state = PASS_INIT;
         }
@@ -352,10 +352,10 @@ int main(void)
     task3.elapsedTime = task3.period;
     task3.TickFct = &SPEAKER_SM;
 
-    // task4.state = start;
-    // task4.period = 50;
-    // task4.elapsedTime = task4.period;
-    // task4.TickFct = &CHANGE_PASS_SM;
+    task4.state = start;
+    task4.period = 50;
+    task4.elapsedTime = task4.period;
+    task4.TickFct = &CHANGE_PASS_SM;
 
     TimerSet(50);
     TimerOn();
