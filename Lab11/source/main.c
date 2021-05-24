@@ -81,21 +81,18 @@ int main(void)
     unsigned short i;
     while (1)
     {
-
-        PORTC = 0xFF;
-        PORTD = 0x0B;
-        // for (i = 0; i < numTasks; ++i)
-        // {
-        //     if (tasks[i]->elapsedTime == tasks[i]->period)
-        //     {
-        //         tasks[i]->state = tasks[i]->TickFct(tasks[i]->state);
-        //         tasks[i]->elapsedTime = 0;
-        //     }
-        //     tasks[i]->elapsedTime += 100;
-        // }
-        // while (!TimerFlag)
-        // {
-        // };
-        // TimerFlag = 0;
+        for (i = 0; i < numTasks; ++i)
+        {
+            if (tasks[i]->elapsedTime == tasks[i]->period)
+            {
+                tasks[i]->state = tasks[i]->TickFct(tasks[i]->state);
+                tasks[i]->elapsedTime = 0;
+            }
+            tasks[i]->elapsedTime += 100;
+        }
+        while (!TimerFlag)
+        {
+        };
+        TimerFlag = 0;
     }
 }
