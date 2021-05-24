@@ -4,7 +4,6 @@
 #ifdef _SIMULATE_
 #include "simAVRHeader.h"
 #endif
-#include "speaker.h"
 
 typedef struct task
 {
