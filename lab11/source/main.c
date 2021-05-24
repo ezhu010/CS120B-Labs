@@ -78,7 +78,7 @@ int main(void)
 
     TimerSet(100);
     TimerOn();
-
+    unsigned short i;
     while (1)
     {
         for (i = 0; i < numTasks; ++i)
