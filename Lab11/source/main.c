@@ -43,6 +43,7 @@ int LED_MATRIX(int state)
     switch (state)
     {
     case init:
+        row = temp;
         column = 0x1E;
         state = shift;
         break;
