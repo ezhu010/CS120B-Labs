@@ -28,7 +28,15 @@ int Demo_Tick(int state)
     switch (state)
     {
     case shift:
-        column = (column << 1) + 1;
+        if (column == 0x0F)
+        {
+            row = row >> 1;
+            column = 0x1E;
+        }
+        else
+        {
+            column = (column << 1) + 1;
+        }
         break;
     default:
         state = shift;
