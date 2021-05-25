@@ -23,7 +23,7 @@ int LED_MATRIX(int state)
 {
     static unsigned char column = 0x1E;
     int temp = rand() % 99 + 1;
-    static unsigned char row = temp;
+     unsigned char row = temp;
 
     switch (state)
     {
