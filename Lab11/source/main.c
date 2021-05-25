@@ -72,7 +72,7 @@ int main(void)
     const unsigned short numTasks = sizeof(tasks) / sizeof(task *);
     const char start = 0;
     task1.state = start;
-    task1.period = 100;
+    task1.period = 200;
     task1.elapsedTime = task1.period;
     task1.TickFct = &Demo_Tick;
 
