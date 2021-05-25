@@ -31,7 +31,7 @@ int Demo_Tick(int state)
         if (column == 0xEF)
         {
             column = 0x1E;
-            row = 0x80;
+            row = row >> 1;
         }
         else
         {
