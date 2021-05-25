@@ -75,16 +75,16 @@ int main(void)
     const unsigned short numTasks = sizeof(tasks) / sizeof(task *);
     const char start = 0;
     task1.state = start;
-    task1.period = 2500;
+    task1.period = 500;
     task1.elapsedTime = task1.period;
     task1.TickFct = &random_tick;
 
     task2.state = start;
-    task2.period = 500;
+    task2.period = 100;
     task2.elapsedTime = task2.period;
     task2.TickFct = &LED_MATRIX;
 
-    TimerSet(500);
+    TimerSet(100);
     TimerOn();
     unsigned short i;
     while (1)
@@ -96,7 +96,7 @@ int main(void)
                 tasks[i]->state = tasks[i]->TickFct(tasks[i]->state);
                 tasks[i]->elapsedTime = 0;
             }
-            tasks[i]->elapsedTime += 500;
+            tasks[i]->elapsedTime += 100;
         }
         while (!TimerFlag)
         {
