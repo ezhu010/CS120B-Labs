@@ -25,6 +25,8 @@ int Demo_Tick(int state)
     static unsigned char row = 0xFE;     // Row(s) displaying pattern.
                                          // 0: display pattern on row
                                          // 1: do NOT display pattern on row
+
+    static unsigned char column = 0x00;
     // Transitions
     switch (state)
     {
@@ -57,8 +59,7 @@ int Demo_Tick(int state)
         break;
     }
     PORTC = pattern; // Pattern to display
-    PORTD = row;     // Row(s) displaying pattern
-    return state;
+    PORTD = column;
 }
 
 int main(void)
@@ -81,18 +82,20 @@ int main(void)
     unsigned short i;
     while (1)
     {
-        for (i = 0; i < numTasks; ++i)
-        {
-            if (tasks[i]->elapsedTime == tasks[i]->period)
-            {
-                tasks[i]->state = tasks[i]->TickFct(tasks[i]->state);
-                tasks[i]->elapsedTime = 0;
-            }
-            tasks[i]->elapsedTime += 100;
-        }
-        while (!TimerFlag)
-        {
-        };
-        TimerFlag = 0;
+        PORTD = 0x00;
+        PORTC = 0x01;
+        //     for (i = 0; i < numTasks; ++i)
+        //     {
+        //         if (tasks[i]->elapsedTime == tasks[i]->period)
+        //         {
+        //             tasks[i]->state = tasks[i]->TickFct(tasks[i]->state);
+        //             tasks[i]->elapsedTime = 0;
+        //         }
+        //         tasks[i]->elapsedTime += 100;
+        //     }
+        //     while (!TimerFlag)
+        //     {
+        //     };
+        //     TimerFlag = 0;
+        // }
     }
-}
