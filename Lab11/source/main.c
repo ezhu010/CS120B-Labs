@@ -23,7 +23,6 @@ int Demo_Tick(int state)
     // Local Variables
     static unsigned char column = 0x1E;
     static unsigned char row = 0x80;
-    unsigned char temp = 0xFE;
 
     // Transitions
     switch (state)
@@ -60,11 +59,11 @@ int main(void)
     const unsigned short numTasks = sizeof(tasks) / sizeof(task *);
     const char start = 0;
     task1.state = start;
-    task1.period = 100;
+    task1.period = 200;
     task1.elapsedTime = task1.period;
     task1.TickFct = &Demo_Tick;
 
-    TimerSet(100);
+    TimerSet(200);
     TimerOn();
     unsigned short i;
     while (1)
@@ -76,7 +75,7 @@ int main(void)
                 tasks[i]->state = tasks[i]->TickFct(tasks[i]->state);
                 tasks[i]->elapsedTime = 0;
             }
-            tasks[i]->elapsedTime += 100;
+            tasks[i]->elapsedTime += 200;
         }
         while (!TimerFlag)
         {
