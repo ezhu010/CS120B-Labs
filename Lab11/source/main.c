@@ -80,11 +80,11 @@ int main(void)
     task1.TickFct = &random_tick;
 
     task2.state = start;
-    task2.period = 300;
+    task2.period = 500;
     task2.elapsedTime = task2.period;
     task2.TickFct = &LED_MATRIX;
 
-    TimerSet(300);
+    TimerSet(500);
     TimerOn();
     unsigned short i;
     while (1)
@@ -96,7 +96,7 @@ int main(void)
                 tasks[i]->state = tasks[i]->TickFct(tasks[i]->state);
                 tasks[i]->elapsedTime = 0;
             }
-            tasks[i]->elapsedTime += 300;
+            tasks[i]->elapsedTime += 500;
         }
         while (!TimerFlag)
         {
