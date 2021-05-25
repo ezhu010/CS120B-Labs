@@ -33,6 +33,11 @@ int Demo_Tick(int state)
             column = 0x1E;
             row = row >> 1;
         }
+        else if (column == 0xEF && row == 0x01)
+        {
+            column = 0x1E;
+            row = 0x80;
+        }
         else
         {
             column = (column << 1) + 1;
