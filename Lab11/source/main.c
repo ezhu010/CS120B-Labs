@@ -84,7 +84,7 @@ int main(void)
     task1.TickFct = &LED_MATRIX;
 
     task2.state = start;
-    task2.period = 300;
+    task2.period = 1800;
     task2.elapsedTime = task2.period;
     task2.TickFct = &random_tick;
 
