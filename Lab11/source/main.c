@@ -33,6 +33,7 @@ int random_tick(int state)
 
 enum LED_Matrix_States
 {
+    init,
     shift
 };
 int LED_MATRIX(int state)
@@ -41,6 +42,10 @@ int LED_MATRIX(int state)
     unsigned char row = 0x80;
     switch (state)
     {
+    case init:
+        column = 0x1E;
+        state = shift;
+        break;
     case shift:
         if (column == 0xEF)
         {
