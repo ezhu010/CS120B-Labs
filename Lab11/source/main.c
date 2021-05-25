@@ -50,13 +50,7 @@ int LED_MATRIX(int state)
         else if (column == 0xEF) //&& row == 0x01
         {
             column = 0x1E;
-            //row = 0x80;
         }
-        // else if (column == 0xEF)
-        // {
-        //     column = 0x1E;
-        //     row = row >> 1;
-        // }
         else
         {
             column = (column << 1) + 1;
