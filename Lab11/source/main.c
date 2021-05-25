@@ -23,7 +23,7 @@ int Demo_Tick(int state)
     // Local Variables
     static unsigned char column = 0x1E;
     // static unsigned char row = 0x80;
-    static unsigned char row = 0x34;
+    static unsigned char row = 34;
 
     // Transitions
     switch (state)
