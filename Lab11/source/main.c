@@ -22,21 +22,15 @@ int Demo_Tick(int state)
 
     // Local Variables
     static unsigned char column = 0x1E;
-    static unsigned char row = 0x80;
+    static unsigned char row = 0xFF;
 
     // Transitions
     switch (state)
     {
     case shift:
-        if (column == 0xEF && row == 0x01)
+        if (column == 0xEF)
         {
             column = 0x1E;
-            row = 0x80;
-        }
-        else if (column == 0xEF)
-        {
-            column = 0x1E;
-            row = row >> 1;
         }
 
         else
