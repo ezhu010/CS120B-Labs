@@ -21,16 +21,15 @@ int Demo_Tick(int state)
 {
 
     // Local Variables
-    static unsigned char pattern = 0x80; // LED pattern - 0: LED off; 1: LED on
-    static unsigned char row = 0xFE;     // Row(s) displaying pattern.
-                                         // 0: display pattern on row
-                                         // 1: do NOT display pattern on row
+    static unsigned char column = 0x1E;
+    static unsigned char row = 0x80;
+    unsigned char temp = 0xFE;
 
-    static unsigned char column = 0x00;
     // Transitions
     switch (state)
     {
     case shift:
+        column = (column << 1) + 1;
         break;
     default:
         state = shift;
@@ -40,20 +39,7 @@ int Demo_Tick(int state)
     switch (state)
     {
     case shift:
-        if (row == 0xEF && pattern == 0x01)
-        { // Reset demo
-            pattern = 0x80;
-            row = 0xFE;
-        }
-        else if (pattern == 0x01)
-        { // Move LED to start of next row
-            pattern = 0x80;
-            row = (row << 1) | 0x01;
-        }
-        else
-        { // Shift LED one spot to the right on current row
-            pattern >>= 1;
-        }
+        column <<= 1;
         break;
     default:
         break;
@@ -82,8 +68,6 @@ int main(void)
     unsigned short i;
     while (1)
     {
-        PORTD = 0x1E;
-        PORTC = 0x80;
         //     for (i = 0; i < numTasks; ++i)
         //     {
         //         if (tasks[i]->elapsedTime == tasks[i]->period)
