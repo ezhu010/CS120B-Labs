@@ -22,7 +22,8 @@ enum Demo_States
 int LED_MATRIX(int state)
 {
     static unsigned char column = 0x1E;
-    static unsigned char row = rand() % 55 + 1;
+    static unsigned char row = 2;
+    int temp = rand();
 
     switch (state)
     {
