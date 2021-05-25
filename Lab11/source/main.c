@@ -42,9 +42,6 @@ int LED_MATRIX(int state)
     unsigned char row = 0x80;
     switch (state)
     {
-    case LED_INIT:
-        state = shift;
-        break;
     case shift:
         if (column == 0xEF) //&& row == 0x01
         {
@@ -58,16 +55,12 @@ int LED_MATRIX(int state)
         // }
         else
         {
+            PORTD = column;
             column = (column << 1) + 1;
         }
         break;
-    default:
-        state = shift;
-        break;
     }
-
-    PORTC = row; // Pattern to display
-    PORTD = column;
+    PORTC = row;
     return state;
 }
 
