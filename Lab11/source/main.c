@@ -72,11 +72,11 @@ int main(void)
     const unsigned short numTasks = sizeof(tasks) / sizeof(task *);
     const char start = 0;
     task1.state = start;
-    task1.period = 200;
+    task1.period = 100;
     task1.elapsedTime = task1.period;
     task1.TickFct = &Demo_Tick;
 
-    TimerSet(200);
+    TimerSet(100);
     TimerOn();
     unsigned short i;
     while (1)
@@ -88,7 +88,7 @@ int main(void)
                 tasks[i]->state = tasks[i]->TickFct(tasks[i]->state);
                 tasks[i]->elapsedTime = 0;
             }
-            tasks[i]->elapsedTime += 200;
+            tasks[i]->elapsedTime += 100;
         }
         while (!TimerFlag)
         {
