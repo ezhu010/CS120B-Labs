@@ -1,4 +1,6 @@
-
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 #include <avr/io.h>
 #include "timer.h"
 #ifdef _SIMULATE_
@@ -13,19 +15,27 @@ typedef struct task
     int (*TickFct)(int);       //Task tick function
 } task;
 
+enum GenerateRandom
+{
+    RANDOM_STATE
+};
+
+int random_tick(int state)
+{
+    switch (state)
+    {
+    case RANDOM_STATE:
+    }
+}
 enum Demo_States
 {
     shift
 };
-int Demo_Tick(int state)
+int LED_MATRIX(int state)
 {
-
-    // Local Variables
     static unsigned char column = 0x1E;
-    // static unsigned char row = 0x80;
-    static unsigned char row = 34;
+    static unsigned char row = rand() % 55 + 1;
 
-    // Transitions
     switch (state)
     {
     case shift:
@@ -48,15 +58,7 @@ int Demo_Tick(int state)
         state = shift;
         break;
     }
-    // Actions
-    // switch (state)
-    // {
-    // case shift:
-    //     column <<= 1;
-    //     break;
-    // default:
-    //     break;
-    // }
+
     PORTC = row; // Pattern to display
     PORTD = column;
     return state;
@@ -73,11 +75,11 @@ int main(void)
     const unsigned short numTasks = sizeof(tasks) / sizeof(task *);
     const char start = 0;
     task1.state = start;
-    task1.period = 200;
+    task1.period = 300;
     task1.elapsedTime = task1.period;
-    task1.TickFct = &Demo_Tick;
+    task1.TickFct = &LED_MATRIX;
 
-    TimerSet(200);
+    TimerSet(300);
     TimerOn();
     unsigned short i;
     while (1)
@@ -90,7 +92,7 @@ int main(void)
                 tasks[i]->state = tasks[i]->TickFct(tasks[i]->state);
                 tasks[i]->elapsedTime = 0;
             }
-            tasks[i]->elapsedTime += 200;
+            tasks[i]->elapsedTime += 300;
         }
         while (!TimerFlag)
         {
