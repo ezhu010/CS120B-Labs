@@ -46,6 +46,7 @@ int Demo_Tick(int state)
     // }
     PORTC = row; // Pattern to display
     PORTD = column;
+    return state;
 }
 
 int main(void)
