@@ -43,11 +43,8 @@ int LED_MATRIX(int state)
     switch (state)
     {
     case shift:
-        if (column == 0x1E)
-        {
-            column = 0x1E;
-        }
-        else if (column == 0xEF) //&& row == 0x01
+
+        if (column == 0xEF) //&& row == 0x01
         {
             column = 0x1E;
         }
