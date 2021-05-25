@@ -78,10 +78,10 @@ int main(void)
     task1.elapsedTime = task1.period;
     task1.TickFct = &LED_MATRIX;
 
-    // task2.state = start;
-    // task2.period = 1800;
-    // task2.elapsedTime = task2.period;
-    // task2.TickFct = &random_tick;
+    task2.state = start;
+    task2.period = 1500;
+    task2.elapsedTime = task2.period;
+    task2.TickFct = &random_tick;
 
     TimerSet(300);
     TimerOn();
