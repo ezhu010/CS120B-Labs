@@ -38,7 +38,7 @@ enum Demo_States
 int LED_MATRIX(int state)
 {
     static unsigned char column = 0x1E;
-    unsigned char row = temp;
+    unsigned char row = 0x80;
     switch (state)
     {
     case shift:
