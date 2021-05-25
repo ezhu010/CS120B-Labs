@@ -28,16 +28,17 @@ int Demo_Tick(int state)
     switch (state)
     {
     case shift:
-        if (column == 0xEF)
-        {
-            column = 0x1E;
-            row = row >> 1;
-        }
-        else if (column == 0xEF && row == 0x01)
+        if (column == 0xEF && row == 0x01)
         {
             column = 0x1E;
             row = 0x80;
         }
+        else if (column == 0xEF)
+        {
+            column = 0x1E;
+            row = row >> 1;
+        }
+
         else
         {
             column = (column << 1) + 1;
@@ -83,19 +84,18 @@ int main(void)
     {
         PORTD = 0xEF;
         PORTC = 0x01;
-        //     for (i = 0; i < numTasks; ++i)
-        //     {
-        //         if (tasks[i]->elapsedTime == tasks[i]->period)
-        //         {
-        //             tasks[i]->state = tasks[i]->TickFct(tasks[i]->state);
-        //             tasks[i]->elapsedTime = 0;
-        //         }
-        //         tasks[i]->elapsedTime += 200;
-        //     }
-        //     while (!TimerFlag)
-        //     {
-        //     };
-        //     TimerFlag = 0;
-        // }
+        for (i = 0; i < numTasks; ++i)
+        {
+            if (tasks[i]->elapsedTime == tasks[i]->period)
+            {
+                tasks[i]->state = tasks[i]->TickFct(tasks[i]->state);
+                tasks[i]->elapsedTime = 0;
+            }
+            tasks[i]->elapsedTime += 200;
+        }
+        while (!TimerFlag)
+        {
+        };
+        TimerFlag = 0;
     }
 }
