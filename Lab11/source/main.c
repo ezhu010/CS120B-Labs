@@ -30,8 +30,8 @@ int Demo_Tick(int state)
     case shift:
         if (column == 0x0F)
         {
-            static unsigned char column = 0x1E;
-            static unsigned char row = 0x80;
+            column = 0x1E;
+            row = 0x80;
         }
         else
         {
