@@ -82,7 +82,7 @@ int main(void)
     unsigned short i;
     while (1)
     {
-        PORTD = 0x1F;
+        PORTD = 0x1E;
         PORTC = 0x80;
         //     for (i = 0; i < numTasks; ++i)
         //     {
