@@ -36,15 +36,15 @@ int Demo_Tick(int state)
         break;
     }
     // Actions
-    switch (state)
-    {
-    case shift:
-        column <<= 1;
-        break;
-    default:
-        break;
-    }
-    PORTC = pattern; // Pattern to display
+    // switch (state)
+    // {
+    // case shift:
+    //     column <<= 1;
+    //     break;
+    // default:
+    //     break;
+    // }
+    PORTC = row; // Pattern to display
     PORTD = column;
 }
 
