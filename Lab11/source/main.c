@@ -28,7 +28,7 @@ int Demo_Tick(int state)
     switch (state)
     {
     case shift:
-        if (column == 0x0F)
+        if (column == 0xEF)
         {
             column = 0x1E;
             row = 0x80;
