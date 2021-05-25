@@ -76,7 +76,7 @@ int main(void)
     task1.elapsedTime = task1.period;
     task1.TickFct = &Demo_Tick;
 
-    TimerSet(100);
+    TimerSet(200);
     TimerOn();
     unsigned short i;
     while (1)
@@ -88,7 +88,7 @@ int main(void)
                 tasks[i]->state = tasks[i]->TickFct(tasks[i]->state);
                 tasks[i]->elapsedTime = 0;
             }
-            tasks[i]->elapsedTime += 100;
+            tasks[i]->elapsedTime += 200;
         }
         while (!TimerFlag)
         {
