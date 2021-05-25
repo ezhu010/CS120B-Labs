@@ -83,7 +83,7 @@ int main(void)
     while (1)
     {
         PORTD = 0x00;
-        PORTC = 0x01;
+        PORTC = 0x80;
         //     for (i = 0; i < numTasks; ++i)
         //     {
         //         if (tasks[i]->elapsedTime == tasks[i]->period)
