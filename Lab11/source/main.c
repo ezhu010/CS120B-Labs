@@ -15,18 +15,6 @@ typedef struct task
     int (*TickFct)(int);       //Task tick function
 } task;
 
-enum GenerateRandom
-{
-    RANDOM_STATE
-};
-
-int random_tick(int state)
-{
-    switch (state)
-    {
-    case RANDOM_STATE:
-    }
-}
 enum Demo_States
 {
     shift
