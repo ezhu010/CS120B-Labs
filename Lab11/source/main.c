@@ -48,6 +48,7 @@ int LED_MATRIX(int state)
         state = shift;
         break;
     case shift:
+        row = temp;
         if (column == 0xEF)
         {
             PORTB = 0x01;
