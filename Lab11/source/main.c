@@ -63,6 +63,22 @@ int LED_MATRIX(int state)
     return state;
 }
 
+enum PLAYER_STATES
+{
+    PLAYER_INIT
+};
+
+int PLAYER_SM(int state)
+{
+    switch (state)
+    {
+    case PLAYER_INIT:
+        PORTC = 0x10;
+        PORTD = 0x0F;
+        break;
+    }
+}
+
 int main(void)
 {
     srand(time(0));
@@ -70,21 +86,25 @@ int main(void)
     PORTD = 0x00;
     DDRC = 0xFF;
     PORTC = 0x00;
-    static task task1, task2;
-    task *tasks[] = {&task1, &task2};
+    static task task1, task2, task3;
+    task *tasks[] = {&task1, &task2, &task3};
     const unsigned short numTasks = sizeof(tasks) / sizeof(task *);
     const char start = 0;
     task1.state = start;
-    task1.period = 500;
+    task1.period = 1500;
     task1.elapsedTime = task1.period;
     task1.TickFct = &random_tick;
 
     task2.state = start;
-    task2.period = 100;
+    task2.period = 300;
     task2.elapsedTime = task2.period;
     task2.TickFct = &LED_MATRIX;
 
-    TimerSet(100);
+    // task2.state = start;
+    // task2.period = 50;
+    // task2.elapsedTime = task2.period;
+    // task2.TickFct = &LED_MATRIX;
+    TimerSet(50);
     TimerOn();
     unsigned short i;
     while (1)
