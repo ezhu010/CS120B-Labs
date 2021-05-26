@@ -38,23 +38,25 @@ enum LED_Matrix_States
 };
 int LED_MATRIX(int state)
 {
-    static unsigned char column = 0x0E;
+    static unsigned char column = 0x1E;
     unsigned char row = temp;
     switch (state)
     {
     case init:
         row = temp;
-        column = 0x0E;
+        column = 0x1E;
         state = shift;
         break;
     case shift:
         if (column == 0xEF)
         {
-            column = 0x0E;
+            PORTB = 0x01;
+            column = 0x1E;
         }
         else
         {
-            column = ((column << 1) & 0x0E) + 1;
+            // column = ((column << 1) & 0x0E) + 1;
+            column = ((column << 1) + 1);
         }
         break;
     }
@@ -83,6 +85,8 @@ int PLAYER_SM(int state)
 int main(void)
 {
     srand(time(0));
+    DDRB = 0xFF;
+    PORTB = 0x00;
     DDRD = 0xFF;
     PORTD = 0x00;
     DDRC = 0xFF;
