@@ -88,18 +88,20 @@ int main(void)
     DDRC = 0xFF;
     PORTC = 0x00;
     static task task1, task2, task3;
-    task *tasks[] = {&task1, &task2, &task3};
+    // task *tasks[] = {&task1, &task2, &task3};
+    task *tasks[] = {&task3};
+
     const unsigned short numTasks = sizeof(tasks) / sizeof(task *);
     const char start = 0;
-    task1.state = start;
-    task1.period = 2500;
-    task1.elapsedTime = task1.period;
-    task1.TickFct = &random_tick;
+    // task1.state = start;
+    // task1.period = 2500;
+    // task1.elapsedTime = task1.period;
+    // task1.TickFct = &random_tick;
 
-    task2.state = start;
-    task2.period = 500;
-    task2.elapsedTime = task2.period;
-    task2.TickFct = &LED_MATRIX;
+    // task2.state = start;
+    // task2.period = 500;
+    // task2.elapsedTime = task2.period;
+    // task2.TickFct = &LED_MATRIX;
 
     task3.state = start;
     task3.period = 50;
