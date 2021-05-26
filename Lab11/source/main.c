@@ -38,23 +38,23 @@ enum LED_Matrix_States
 };
 int LED_MATRIX(int state)
 {
-    static unsigned char column = 0x1E;
+    static unsigned char column = 0x0E;
     unsigned char row = temp;
     switch (state)
     {
     case init:
         row = temp;
-        column = 0x1E;
+        column = 0x0E;
         state = shift;
         break;
     case shift:
-        if (column == 0xF7)
+        if (column == 0xEF)
         {
-            column = 0x1E;
+            column = 0x0E;
         }
         else
         {
-            column = ((column << 1) + 1);
+            column = ((column << 1) & 0x0E) +1);
         }
         break;
     }
