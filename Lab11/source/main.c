@@ -36,8 +36,8 @@ enum LED_Matrix_States
     init,
     shift
 };
-static unsigned char column = 0x1E;
-unsigned char row = temp;
+unsigned char column = 0x1E;
+unsigned char row;
 int LED_MATRIX(int state)
 {
     switch (state)
