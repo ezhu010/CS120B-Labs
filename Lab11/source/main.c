@@ -44,17 +44,17 @@ int LED_MATRIX(int state)
     {
     case init:
         row = temp;
-        column = 0x1E;
+        column = 0x1E & 0x0F;
         state = shift;
         break;
     case shift:
         if (column == 0xEF)
         {
-            column = 0x1E;
+            column = 0x1E & 0x0F;
         }
         else
         {
-            column = (column << 1) + 1;
+            column = ((column << 1) + 1) & 0x0F;
         }
         break;
     }
