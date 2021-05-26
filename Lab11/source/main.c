@@ -36,10 +36,10 @@ enum LED_Matrix_States
     init,
     shift
 };
+static unsigned char column = 0x1E;
+unsigned char row = temp;
 int LED_MATRIX(int state)
 {
-    static unsigned char column = 0x1E;
-    unsigned char row = temp;
     switch (state)
     {
     case init:
@@ -77,7 +77,7 @@ int PLAYER_SM(int state)
     {
     case PLAYER_INIT:
         // PORTC = 0x10;
-        // PORTD = 0x0F;
+        // PORTD = (0x0F);
         break;
     }
     return state;
