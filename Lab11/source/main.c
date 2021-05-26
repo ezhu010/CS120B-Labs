@@ -77,8 +77,8 @@ int PLAYER_SM(int state)
     switch (state)
     {
     case PLAYER_INIT:
-        // PORTC = 0x10;
-        // PORTD = (0x0F) & column;
+        PORTC = 0x10;
+        PORTD = (0x0F) & column;
         break;
     }
     return state;
