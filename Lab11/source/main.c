@@ -56,6 +56,7 @@ int LED_MATRIX(int state)
         else
         {
             // column = ((column << 1) & 0x0E) + 1;
+            PORTB = 0x00;
             column = ((column << 1) + 1);
         }
         break;
