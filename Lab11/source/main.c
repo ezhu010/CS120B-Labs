@@ -77,6 +77,7 @@ int PLAYER_SM(int state)
         PORTD = 0x0F;
         break;
     }
+    return state;
 }
 
 int main(void)
