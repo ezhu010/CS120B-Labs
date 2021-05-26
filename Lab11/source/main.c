@@ -87,8 +87,8 @@ int main(void)
     PORTD = 0x00;
     DDRC = 0xFF;
     PORTC = 0x00;
-    static task task1, task2;
-    task *tasks[] = {&task1, &task2};
+    static task task1, task2, task3;
+    task *tasks[] = {&task1, &task2, &task3};
     const unsigned short numTasks = sizeof(tasks) / sizeof(task *);
     const char start = 0;
     task1.state = start;
@@ -101,10 +101,10 @@ int main(void)
     task2.elapsedTime = task2.period;
     task2.TickFct = &LED_MATRIX;
 
-    // task3.state = start;
-    // task3.period = 50;
-    // task3.elapsedTime = task2.period;
-    // task3.TickFct = &LED_MATRIX;
+    task3.state = start;
+    task3.period = 50;
+    task3.elapsedTime = task3.period;
+    task3.TickFct = &PLAYER_SM;
     TimerSet(50);
     TimerOn();
     unsigned short i;
