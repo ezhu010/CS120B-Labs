@@ -87,8 +87,8 @@ int main(void)
     PORTD = 0x00;
     DDRC = 0xFF;
     PORTC = 0x00;
-    static task task1, task2, task3;
-    task *tasks[] = {&task1, &task2, &task3};
+    static task task1, task2;
+    task *tasks[] = {&task1, &task2};
     const unsigned short numTasks = sizeof(tasks) / sizeof(task *);
     const char start = 0;
     task1.state = start;
