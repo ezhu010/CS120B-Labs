@@ -92,19 +92,19 @@ int main(void)
     const unsigned short numTasks = sizeof(tasks) / sizeof(task *);
     const char start = 0;
     task1.state = start;
-    task1.period = 1500;
+    task1.period = 2500;
     task1.elapsedTime = task1.period;
     task1.TickFct = &random_tick;
 
     task2.state = start;
-    task2.period = 300;
+    task2.period = 500;
     task2.elapsedTime = task2.period;
     task2.TickFct = &LED_MATRIX;
 
-    // task2.state = start;
-    // task2.period = 50;
-    // task2.elapsedTime = task2.period;
-    // task2.TickFct = &LED_MATRIX;
+    // task3.state = start;
+    // task3.period = 50;
+    // task3.elapsedTime = task2.period;
+    // task3.TickFct = &LED_MATRIX;
     TimerSet(50);
     TimerOn();
     unsigned short i;
