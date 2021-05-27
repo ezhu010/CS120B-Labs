@@ -83,11 +83,15 @@ int PLAYER_SM(int state)
     case PLAYER_INIT:
         if (counter2 == 5)
         {
-            // if ((player & PORTC) > 0)
-            // {
-            //     PORTB = 0x01;
-            // }
-            PORTC = player;
+
+            if ((~PINA & 0x01) == 0x01)
+            {
+                player <<= 1;
+            }
+            else
+            {
+                PORTC = player;
+            }
             PORTD = 0x0F; // 0000 1111
             counter2 = 0;
         }
@@ -99,10 +103,7 @@ int PLAYER_SM(int state)
         {
             PORTB = 0;
         }
-        // else if ((player & temp) == 0)
-        // {
-        //     PORTB = 0;
-        // }
+
         else
         {
             PORTC = row;
@@ -125,7 +126,6 @@ int main(void)
     PORTC = 0x00;
     static task task1, task2, task3;
     task *tasks[] = {&task1, &task2, &task3};
-    // task *tasks[] = {&task3};
 
     const unsigned short numTasks = sizeof(tasks) / sizeof(task *);
     const char start = 0;
