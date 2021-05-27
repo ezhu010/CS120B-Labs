@@ -84,15 +84,9 @@ int PLAYER_SM(int state)
         if (counter2 == 5)
         {
 
-            if ((~PINA & 0x01) == 0x01)
-            {
-                player <<= 1;
-            }
-            else
-            {
-                PORTC = player;
-            }
-            PORTD = 0x0F; // 0000 1111
+            PORTC = player;
+
+            PORTD = 0x0F;
             counter2 = 0;
         }
         else if ((player & temp) > 0 && column == 0xEF)
