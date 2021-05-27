@@ -74,6 +74,7 @@ enum PLAYER_STATES
     PLAYER_INIT
 };
 int counter2 = 0;
+int player = 0x10;
 int PLAYER_SM(int state)
 {
     counter2++;
@@ -82,7 +83,11 @@ int PLAYER_SM(int state)
     case PLAYER_INIT:
         if (counter2 == 5)
         {
-            PORTC = 0x10;
+            if ((player & PORTC) > 0)
+            {
+                PORTB = 0x01;
+            }
+            player = 0x10;
             PORTD = 0x0F; // 0000 1111
             counter2 = 0;
         }
