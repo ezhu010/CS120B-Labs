@@ -126,6 +126,11 @@ int PLAYER_MOVE_SM(int state)
                 player = player << 1;
                 state = BUTTON_PRESS;
             }
+            else if ((~PINA & 0x02) == 0x02)
+            {
+                player = player >> 1;
+                state = BUTTON_PRESS;
+            }
             else
             {
                 state = BUTTON_INIT;
@@ -136,11 +141,7 @@ int PLAYER_MOVE_SM(int state)
             {
                 state = BUTTON_PRESS;
             }
-            else if ((~PINA & 0x02) == 0x02)
-            {
-                player = player >> 1;
-                state = BUTTON_PRESS;
-            }
+
             else
             {
                 state = BUTTON_INIT;
