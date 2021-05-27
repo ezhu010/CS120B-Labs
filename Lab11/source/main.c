@@ -83,11 +83,11 @@ int PLAYER_SM(int state)
     case PLAYER_INIT:
         if (counter2 == 5)
         {
-            if ((player & PORTC) > 0)
-            {
-                PORTB = 0x01;
-            }
-            player = 0x10;
+            // if ((player & PORTC) > 0)
+            // {
+            //     PORTB = 0x01;
+            // }
+            PORTC = 0x10;
             PORTD = 0x0F; // 0000 1111
             counter2 = 0;
         }
