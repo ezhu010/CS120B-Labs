@@ -111,12 +111,12 @@ int main(void)
     task1.TickFct = &random_tick;
 
     task2.state = start;
-    task2.period = 1;
+    task2.period = 5;
     task2.elapsedTime = task2.period;
     task2.TickFct = &LED_MATRIX;
 
     task3.state = start;
-    task3.period = 1;
+    task3.period = 5;
     task3.elapsedTime = task3.period;
     task3.TickFct = &PLAYER_SM;
     TimerSet(50);
@@ -131,7 +131,7 @@ int main(void)
                 tasks[i]->state = tasks[i]->TickFct(tasks[i]->state);
                 tasks[i]->elapsedTime = 0;
             }
-            tasks[i]->elapsedTime += 50;
+            tasks[i]->elapsedTime += 1;
         }
         while (!TimerFlag)
         {
