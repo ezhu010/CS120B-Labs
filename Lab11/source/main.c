@@ -80,7 +80,7 @@ enum PLAYER_STATES
 int counter2 = 0;
 int PLAYER_SM(int state)
 {
-    count2++;
+    counter2++;
     switch (state)
     {
     case PLAYER_INIT:
@@ -88,7 +88,7 @@ int PLAYER_SM(int state)
         {
             PORTC = 0x10;
             PORTD = 0x0F; // 0000 1111
-            count2 = 0;
+            counter2 = 0;
         }
 
         break;
