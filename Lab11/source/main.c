@@ -55,7 +55,7 @@ int LED_MATRIX(int state)
         {
             column = 0x1E;
         }
-        else if (count == 10)
+        else if (count == 100)
         {
             column = ((column << 1) + 1);
             count = 0;
@@ -111,7 +111,7 @@ int main(void)
     task1.TickFct = &random_tick;
 
     task2.state = start;
-    task2.period = 1;
+    task2.period = 10;
     task2.elapsedTime = task2.period;
     task2.TickFct = &LED_MATRIX;
 
