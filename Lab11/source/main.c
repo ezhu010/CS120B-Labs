@@ -116,7 +116,7 @@ int main(void)
     task2.TickFct = &LED_MATRIX;
 
     task3.state = start;
-    task3.period = 5;
+    task3.period = 100;
     task3.elapsedTime = task3.period;
     task3.TickFct = &PLAYER_SM;
     TimerSet(50);
