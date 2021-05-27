@@ -119,7 +119,7 @@ int main(void)
     task3.period = 50;
     task3.elapsedTime = task3.period;
     task3.TickFct = &PLAYER_SM;
-    TimerSet(1);
+    TimerSet(50);
     TimerOn();
     unsigned short i;
     while (1)
@@ -131,7 +131,7 @@ int main(void)
                 tasks[i]->state = tasks[i]->TickFct(tasks[i]->state);
                 tasks[i]->elapsedTime = 0;
             }
-            tasks[i]->elapsedTime += 1;
+            tasks[i]->elapsedTime += 50;
         }
         while (!TimerFlag)
         {
