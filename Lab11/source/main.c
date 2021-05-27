@@ -55,7 +55,7 @@ int LED_MATRIX(int state)
         {
             column = 0x1E;
         }
-        else if (count == 20)
+        else if (count == 5)
         {
             column = ((column << 1) + 1);
             count = 0;
@@ -84,7 +84,7 @@ int PLAYER_SM(int state)
     switch (state)
     {
     case PLAYER_INIT:
-        if (counter2 == 20)
+        if (counter2 == 5)
         {
             PORTC = 0x10;
             PORTD = 0x0F; // 0000 1111
