@@ -77,14 +77,20 @@ enum PLAYER_STATES
 {
     PLAYER_INIT
 };
-
+int counter2 = 0;
 int PLAYER_SM(int state)
 {
+    count2++;
     switch (state)
     {
     case PLAYER_INIT:
-        PORTC = 0x10;
-        PORTD = 0x0F; // 0000 1111
+        if (counter2 == 20)
+        {
+            PORTC = 0x10;
+            PORTD = 0x0F; // 0000 1111
+            count2 = 0;
+        }
+
         break;
     }
     return state;
