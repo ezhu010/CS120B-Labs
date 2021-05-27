@@ -87,7 +87,7 @@ int PLAYER_SM(int state)
             // {
             //     PORTB = 0x01;
             // }
-            PORTC = 0x10;
+            PORTC = player;
             PORTD = 0x0F; // 0000 1111
             counter2 = 0;
         }
