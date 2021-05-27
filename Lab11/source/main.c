@@ -111,6 +111,45 @@ int PLAYER_SM(int state)
     return state;
 }
 
+enum PLAYER_MOVE
+{
+    BUTTON_INIT,
+    BUTTON_PRESS,
+};
+int count3 = 0;
+int PLAYER_MOVE_SM(int state)
+{
+    count3++;
+    if (count3 == 50)
+    {
+        switch (state)
+        {
+        case BUTTON_INIT:
+            if ((~PINA & 0x01) == 0x01)
+            {
+                player = player << 1;
+                state = BUTTON_PRESS;
+            }
+            else
+            {
+                state = BUTTON_INIT;
+            }
+            break;
+        case BUTTON_PRESS:
+            if ((~PINA & 0x01) == 0x01)
+            {
+                state = BUTTON_PRESS;
+            }
+            else
+            {
+                state = BUTTON_INIT;
+            }
+        }
+        count3 = 0;
+    }
+    return state;
+}
+
 int main(void)
 {
     srand(time(0));
@@ -122,8 +161,8 @@ int main(void)
     PORTD = 0x00;
     DDRC = 0xFF;
     PORTC = 0x00;
-    static task task1, task2, task3;
-    task *tasks[] = {&task1, &task2, &task3};
+    static task task1, task2, task3, task4;
+    task *tasks[] = {&task1, &task2, &task3, &task4};
 
     const unsigned short numTasks = sizeof(tasks) / sizeof(task *);
     const char start = 0;
@@ -141,6 +180,11 @@ int main(void)
     task3.period = 1;
     task3.elapsedTime = task3.period;
     task3.TickFct = &PLAYER_SM;
+
+    task4.state = start;
+    task4.period = 1;
+    task4.elapsedTime = task4.period;
+    task4.TickFct = &PLAYER_MOVE_SM;
     TimerSet(1);
     TimerOn();
     unsigned short i;
