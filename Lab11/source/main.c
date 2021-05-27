@@ -116,7 +116,7 @@ int count3 = 0;
 int PLAYER_MOVE_SM(int state)
 {
     count3++;
-    if (count3 == 50)
+    if (count3 == 20)
     {
         switch (state)
         {
@@ -136,6 +136,11 @@ int PLAYER_MOVE_SM(int state)
             {
                 state = BUTTON_PRESS;
             }
+            // else if ((~PINA & 0x02) == 0x02)
+            // {
+            //     player = player >> 1;
+            //     state = BUTTON_PRESS;
+            // }
             else
             {
                 state = BUTTON_INIT;
