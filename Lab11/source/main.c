@@ -116,7 +116,7 @@ int count3 = 0;
 int PLAYER_MOVE_SM(int state)
 {
     count3++;
-    if (count3 == 20)
+    if (count3 == 50)
     {
         switch (state)
         {
