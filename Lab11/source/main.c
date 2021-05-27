@@ -95,6 +95,10 @@ int PLAYER_SM(int state)
         {
             PORTB = 1;
         }
+        else if ((player & temp) == 0 && column != 0xEF)
+        {
+            PORTB = 0;
+        }
         // else if ((player & temp) == 0)
         // {
         //     PORTB = 0;
