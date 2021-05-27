@@ -51,7 +51,7 @@ int LED_MATRIX(int state)
         break;
     case shift:
         row = temp;
-        if (column == 0xEF && count == 100)
+        if (column == 0xEF && count == 80)
         {
             column = 0x1E;
             count = 0;
