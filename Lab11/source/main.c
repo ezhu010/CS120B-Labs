@@ -84,7 +84,7 @@ int PLAYER_SM(int state)
     switch (state)
     {
     case PLAYER_INIT:
-        if (counter2 == 5)
+        if (counter2 == 10)
         {
             PORTC = 0x10;
             PORTD = 0x0F; // 0000 1111
