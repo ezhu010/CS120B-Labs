@@ -85,7 +85,7 @@ int PLAYER_SM(int state)
         {
             if ((~PINA & 0x01) == 0x01)
             {
-                player = 0x20; //0010 000
+                player = 0x20;
             }
             PORTC = player;
             PORTD = 0x0F;
