@@ -121,7 +121,7 @@ int PLAYER_MOVE_SM(int state)
         switch (state)
         {
         case BUTTON_INIT:
-            if ((~PINA & 0x01) == 0x01)
+            if ((~PINA & 0x01) == 0x01 && player != 0x80)
             {
                 player = player << 1;
                 state = BUTTON_PRESS;
