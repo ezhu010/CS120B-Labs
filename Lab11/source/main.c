@@ -90,6 +90,11 @@ int PLAYER_SM(int state)
             PORTD = 0x0F; // 0000 1111
             counter2 = 0;
         }
+        else
+        {
+            PORTC = row;
+            PORTD = column;
+        }
 
         break;
     }
@@ -117,7 +122,7 @@ int main(void)
     task1.TickFct = &random_tick;
 
     task2.state = start;
-    task2.period = 10;
+    task2.period = 5;
     task2.elapsedTime = task2.period;
     task2.TickFct = &LED_MATRIX;
 
