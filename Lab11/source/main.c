@@ -51,21 +51,17 @@ int LED_MATRIX(int state)
         break;
     case shift:
         row = temp;
-        if (column == 0xEF)
+        if (column == 0xEF && count == 100)
         {
             column = 0x1E;
+            count = 0;
         }
         else if (count == 100)
         {
             column = ((column << 1) + 1);
             count = 0;
         }
-        // else
-        // {
-        //     // column = ((column << 1) & 0x0E) + 1;
-        //     PORTB = 0x00;
-        //     column = ((column << 1) + 1;
-        // }
+
         break;
     }
     PORTC = row;
