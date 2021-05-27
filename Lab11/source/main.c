@@ -125,7 +125,7 @@ int main(void)
     task3.period = 1;
     task3.elapsedTime = task3.period;
     task3.TickFct = &PLAYER_SM;
-    TimerSet(50);
+    TimerSet(1);
     TimerOn();
     unsigned short i;
     while (1)
