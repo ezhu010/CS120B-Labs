@@ -56,7 +56,7 @@ int LED_MATRIX(int state)
             column = 0x1E;
             count = 0;
         }
-        else if (count == 100)
+        else if (count == 80)
         {
             column = ((column << 1) + 1);
             count = 0;
