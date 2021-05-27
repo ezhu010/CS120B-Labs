@@ -38,8 +38,10 @@ enum LED_Matrix_States
 };
 unsigned char column = 0x1E;
 unsigned char row;
+int count = 0;
 int LED_MATRIX(int state)
 {
+    count++;
     switch (state)
     {
     case init:
@@ -51,15 +53,19 @@ int LED_MATRIX(int state)
         row = temp;
         if (column == 0xEF)
         {
-            PORTB = 0x01;
             column = 0x1E;
         }
-        else
+        else if (count == 100)
         {
-            // column = ((column << 1) & 0x0E) + 1;
-            PORTB = 0x00;
-            column = ((column << 1) + 1);
+                column = ((column << 1) + 1;
+                count = 0;
         }
+        // else
+        // {
+        //     // column = ((column << 1) & 0x0E) + 1;
+        //     PORTB = 0x00;
+        //     column = ((column << 1) + 1;
+        // }
         break;
     }
     PORTC = row;
@@ -78,7 +84,7 @@ int PLAYER_SM(int state)
     {
     case PLAYER_INIT:
         PORTC = 0x10;
-        PORTD = (0x0F) & column;
+        PORTD = 0x0F; // 0000 1111
         break;
     }
     return state;
@@ -113,7 +119,7 @@ int main(void)
     task3.period = 50;
     task3.elapsedTime = task3.period;
     task3.TickFct = &PLAYER_SM;
-    TimerSet(50);
+    TimerSet(1);
     TimerOn();
     unsigned short i;
     while (1)
