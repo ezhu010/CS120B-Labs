@@ -216,11 +216,11 @@ int main(void)
             }
             tasks[i]->elapsedTime += 1;
         }
-        // if (totalTimeElapsed == 6000)
-        // {
-        //     task2.period = 3;
-        //     newTimer = 180;
-        // }
+        if (totalTimeElapsed == 6000)
+        {
+            task2.period = 3;
+            newTimer = 180;
+        }
         totalTimeElapsed += 1;
 
         while (!TimerFlag)
