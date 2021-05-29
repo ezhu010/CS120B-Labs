@@ -126,7 +126,7 @@ enum PLAYER_MOVE
 int count3 = 0;
 int PLAYER_MOVE_SM(int state)
 {
-    TimerSet(1);
+    // TimerSet(1);
     count3++;
     if (count3 == 50)
     {
