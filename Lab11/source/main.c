@@ -22,7 +22,6 @@ enum Random_States
 int random_counter = 599;
 int temp = 0;
 int newTimer = 600;
-int totalTimeElapsed = 0;
 
 // This function gets the random variable to display for the row.
 
@@ -180,6 +179,7 @@ int main(void)
     PORTD = 0x00;
     DDRC = 0xFF;
     PORTC = 0x00;
+    int totalTimeElapsed = 0;
 
     const unsigned short numTasks = sizeof(tasks) / sizeof(task *);
     const char start = 0;
