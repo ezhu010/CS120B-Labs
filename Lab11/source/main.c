@@ -50,7 +50,7 @@ enum LED_Matrix_States
 unsigned char column = 0x1E;
 unsigned char row;
 int count = 0;
-int led_ticker = 120;
+int led_ticker = 600;
 int LED_MATRIX(int state)
 {
     count++;
@@ -189,7 +189,7 @@ int main(void)
     task1.TickFct = &random_tick;
 
     task2.state = start;
-    task2.period = 5;
+    task2.period = 1;
     task2.elapsedTime = task2.period;
     task2.TickFct = &LED_MATRIX;
 
