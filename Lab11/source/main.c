@@ -223,10 +223,8 @@ int main(void)
             TimerSet(3000);
             hit = 0;
         }
-        else
-        {
-            TimerSet(1);
-        }
+        TimerSet(1);
+
         if (totalTimeElapsed == 6000)
         {
             task2.period = 3;
