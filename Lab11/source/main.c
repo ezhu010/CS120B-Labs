@@ -206,7 +206,7 @@ int main(void)
             }
             if (totalTimeElapsed == 3000) // speed up the game after __ seconds
             {
-                task1.period = 1250;
+                task1.period = 1300;
                 led_ticker = 50;
             }
             tasks[i]->elapsedTime += 1;
