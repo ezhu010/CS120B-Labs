@@ -156,6 +156,9 @@ int PLAYER_MOVE_SM(int state)
     return state;
 }
 
+static task task1, task2, task3, task4;
+task *tasks[] = {&task1, &task2, &task3, &task4};
+
 int main(void)
 {
     srand(time(0));
@@ -167,8 +170,6 @@ int main(void)
     PORTD = 0x00;
     DDRC = 0xFF;
     PORTC = 0x00;
-    static task task1, task2, task3, task4;
-    task *tasks[] = {&task1, &task2, &task3, &task4};
 
     const unsigned short numTasks = sizeof(tasks) / sizeof(task *);
     const char start = 0;
