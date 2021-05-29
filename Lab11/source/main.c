@@ -52,11 +52,6 @@ int LED_MATRIX(int state)
         state = shift;
         break;
     case shift:
-        if (totalTimeElapsed == 1000) // speed up the game after __ seconds
-        {
-            task1.period = 2500;
-            led_ticker = 100;
-        }
         row = temp;
         if (column == 0xEF && count == led_ticker && totalTimeElapsed)
         {
@@ -209,7 +204,13 @@ int main(void)
                 tasks[i]->state = tasks[i]->TickFct(tasks[i]->state);
                 tasks[i]->elapsedTime = 0;
             }
+            if (totalTimeElapsed == 1000) // speed up the game after __ seconds
+            {
+                task1.period = 2500;
+                led_ticker = 100;
+            }
             tasks[i]->elapsedTime += 1;
+            totalTimeElapsed += 1;
         }
         while (!TimerFlag)
         {
