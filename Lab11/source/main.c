@@ -19,9 +19,9 @@ enum Random_States
 {
     random_init
 };
-int random_counter = 599;
+int random_counter = 1199;
 int temp = 0;
-int newTimer = 600;
+int newTimer = 1200;
 int totalTimeElapsed = 0;
 
 // This function gets the random variable to display for the row.
@@ -214,11 +214,11 @@ int main(void)
                 tasks[i]->state = tasks[i]->TickFct(tasks[i]->state);
                 tasks[i]->elapsedTime = 0;
             }
-            if (totalTimeElapsed == 6000)
-            {
-                task1.period = 5;
-                task2.period = 5;
-            }
+            // if (totalTimeElapsed == 6000)
+            // {
+            //     task1.period = 5;
+            //     task2.period = 5;
+            // }
             totalTimeElapsed += 1;
             tasks[i]->elapsedTime += 1;
         }
