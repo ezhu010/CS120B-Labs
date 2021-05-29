@@ -209,6 +209,7 @@ int main(void)
     unsigned short i;
     while (1)
     {
+        TimerSet(1);
         for (i = 0; i < numTasks; ++i)
         {
             if (tasks[i]->elapsedTime == tasks[i]->period)
@@ -223,7 +224,6 @@ int main(void)
             TimerSet(3000);
             hit = 0;
         }
-        TimerSet(1);
 
         if (totalTimeElapsed == 6000)
         {
