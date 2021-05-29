@@ -217,7 +217,7 @@ int main(void)
             {
                 led_ticker = 50;
                 newTimer = 1250;
-                // random_counter = 0;
+                random_counter = 0;
             }
             tasks[i]->elapsedTime += 1;
             totalTimeElapsed += 1;
