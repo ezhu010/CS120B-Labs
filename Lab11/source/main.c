@@ -214,6 +214,7 @@ int main(void)
             task2.period = 10;
             newTimer = 600;
             totalTimeElapsed = 0;
+            lives = 1;
         }
         for (i = 0; i < numTasks; ++i)
         {
