@@ -39,6 +39,7 @@ enum LED_Matrix_States
 unsigned char column = 0x1E;
 unsigned char row;
 int count = 0;
+int totalTimeElapsed = 0;
 int LED_MATRIX(int state)
 {
     count++;
@@ -51,12 +52,12 @@ int LED_MATRIX(int state)
         break;
     case shift:
         row = temp;
-        if (column == 0xEF && count == 100)
+        if (column == 0xEF && count == 120)
         {
             column = 0x1E;
             count = 0;
         }
-        else if (count == 100)
+        else if (count == 120)
         {
             column = ((column << 1) + 1);
             count = 0;
@@ -172,7 +173,7 @@ int main(void)
     const unsigned short numTasks = sizeof(tasks) / sizeof(task *);
     const char start = 0;
     task1.state = start;
-    task1.period = 2500;
+    task1.period = 3000;
     task1.elapsedTime = task1.period;
     task1.TickFct = &random_tick;
 
