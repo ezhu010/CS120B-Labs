@@ -217,7 +217,8 @@ int main(void)
         }
         if ((player & temp) > 0 && column == 0xEF)
         {
-
+            task2.period = 10;
+            newTimer = 600;
             PORTB = 1;
         }
         else if (column != 0xEF)
