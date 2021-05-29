@@ -78,7 +78,7 @@ int LED_MATRIX(int state)
     PORTD = column;
     return state;
 }
-
+bool hit = false;
 enum PLAYER_STATES
 {
     PLAYER_INIT
@@ -99,7 +99,7 @@ int PLAYER_SM(int state)
         }
         else if ((player & temp) > 0 && column == 0xEF)
         {
-            TimerSet(5000);
+            hit = true;
             PORTB = 1;
         }
         else if (column != 0xEF)
@@ -217,6 +217,15 @@ int main(void)
                 tasks[i]->elapsedTime = 0;
             }
             tasks[i]->elapsedTime += 1;
+        }
+        if (hit)
+        {
+            TimerSet(3000);
+            hit = false;
+        }
+        else
+        {
+            TimserSet(1);
         }
         if (totalTimeElapsed == 6000)
         {
