@@ -219,7 +219,7 @@ int main(void)
         if (totalTimeElapsed == 6000)
         {
             task2.period = 5;
-            newTimer = 300;
+            newTimer = 180;
         }
         totalTimeElapsed += 1;
 
