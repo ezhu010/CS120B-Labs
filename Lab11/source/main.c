@@ -53,12 +53,12 @@ int LED_MATRIX(int state)
         break;
     case shift:
         row = temp;
-        if (column == 0xEF && count == led_ticker && totalTimeElapsed)
+        if (column == 0xEF && count == led_ticker)
         {
             column = 0x1E;
             count = 0;
         }
-        else if (count == led_ticker && totalTimeElapsed)
+        else if (count == led_ticker)
         {
             column = ((column << 1) + 1);
             count = 0;
