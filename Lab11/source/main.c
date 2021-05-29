@@ -214,6 +214,8 @@ int main(void)
             task2.period = 10;
             newTimer = 600;
             totalTimeElapsed = 0;
+            random_counter = 599;
+
             lives = 1;
         }
         for (i = 0; i < numTasks; ++i)
@@ -231,7 +233,6 @@ int main(void)
             task2.period = 3;
             newTimer = 180;
         }
-
         totalTimeElapsed += 1;
 
         while (!TimerFlag)
