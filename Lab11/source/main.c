@@ -98,6 +98,14 @@ int PLAYER_SM(int state)
             PORTD = 0x0F;
             counter2 = 0;
         }
+        else if ((player & temp) > 0 && column == 0xEF)
+        {
+            PORTB = 1;
+        }
+        else
+        {
+            PORTB = 0;
+        }
 
         else
         {
@@ -118,7 +126,6 @@ enum PLAYER_MOVE
 int count3 = 0;
 int PLAYER_MOVE_SM(int state)
 {
-    // TimerSet(1);
     count3++;
     if (count3 == 50)
     {
