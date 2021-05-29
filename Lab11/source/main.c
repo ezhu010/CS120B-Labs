@@ -213,10 +213,11 @@ int main(void)
                 tasks[i]->state = tasks[i]->TickFct(tasks[i]->state);
                 tasks[i]->elapsedTime = 0;
             }
-            if (totalTimeElapsed == 3000) // speed up the game after __ seconds
+            if (totalTimeElapsed == 6000) // speed up the game after __ seconds
             {
                 led_ticker = 50;
                 newTimer = 1250;
+                // random_counter = 0;
             }
             tasks[i]->elapsedTime += 1;
             totalTimeElapsed += 1;
