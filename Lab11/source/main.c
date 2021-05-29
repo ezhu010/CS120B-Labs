@@ -78,7 +78,7 @@ int LED_MATRIX(int state)
     PORTD = column;
     return state;
 }
-bool hit = false;
+unsigned char hit = false;
 enum PLAYER_STATES
 {
     PLAYER_INIT
@@ -222,6 +222,14 @@ int main(void)
         {
             TimerSet(3000);
             hit = false;
+            else if ((player & temp) > 0 && column == 0xEF)
+            {
+                PORTB = 1;
+            }
+            else if (column != 0xEF)
+            {
+                PORTB = 0;
+            }
         }
         else
         {
