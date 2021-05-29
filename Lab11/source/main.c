@@ -200,6 +200,17 @@ int main(void)
     unsigned short i;
     while (1)
     {
+        if ((player & temp) > 0 && column == 0xEF)
+        {
+            task2.period = 10;
+            newTimer = 600;
+            PORTB = 1;
+            totalTimeElapsed = 0;
+        }
+        else if (column != 0xEF)
+        {
+            PORTB = 0;
+        }
         for (i = 0; i < numTasks; ++i)
         {
             if (tasks[i]->elapsedTime == tasks[i]->period)
@@ -215,17 +226,7 @@ int main(void)
             task2.period = 3;
             newTimer = 180;
         }
-        if ((player & temp) > 0 && column == 0xEF)
-        {
-            task2.period = 10;
-            newTimer = 600;
-            PORTB = 1;
-            totalTimeElapsed = 0;
-        }
-        else if (column != 0xEF)
-        {
-            PORTB = 0;
-        }
+
         totalTimeElapsed += 1;
 
         while (!TimerFlag)
