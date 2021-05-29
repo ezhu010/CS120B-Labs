@@ -19,8 +19,9 @@ enum Random_States
 {
     random_init
 };
-int random_counter = 3000;
+int random_counter = 2999;
 int temp = 0;
+
 int random_tick(int state)
 {
     random_counter++;
