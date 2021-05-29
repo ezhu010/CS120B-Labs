@@ -219,9 +219,9 @@ int main(void)
                 task2.period = 5;
                 newTimer = 300;
             }
-            totalTimeElapsed += 1;
             tasks[i]->elapsedTime += 1;
         }
+        totalTimeElapsed += 1;
 
         while (!TimerFlag)
         {
