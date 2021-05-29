@@ -98,17 +98,6 @@ int PLAYER_SM(int state)
             PORTD = 0x0F;
             counter2 = 0;
         }
-        else if ((player & temp) > 0 && column == 0xEF)
-        {
-            task2.period = 10;
-            totalTimeElapsed = 0;
-            newTimer = 600;
-            PORTB = 1;
-        }
-        else if (column != 0xEF)
-        {
-            PORTB = 0;
-        }
 
         else
         {
@@ -225,6 +214,15 @@ int main(void)
         {
             task2.period = 3;
             newTimer = 180;
+        }
+        if ((player & temp) > 0 && column == 0xEF)
+        {
+
+            PORTB = 1;
+        }
+        else if (column != 0xEF)
+        {
+            PORTB = 0;
         }
         totalTimeElapsed += 1;
 
