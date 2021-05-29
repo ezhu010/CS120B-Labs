@@ -22,6 +22,8 @@ enum Random_States
 int random_counter = 2999;
 int temp = 0;
 int newTimer = 3000;
+int totalTimeElapsed = 0;
+
 // This function gets the random variable to display for the row.
 
 int random_tick(int state)
@@ -48,7 +50,6 @@ enum LED_Matrix_States
 unsigned char column = 0x1E;
 unsigned char row;
 int count = 0;
-int totalTimeElapsed = 0;
 int led_ticker = 120;
 int LED_MATRIX(int state)
 {
@@ -213,14 +214,7 @@ int main(void)
                 tasks[i]->state = tasks[i]->TickFct(tasks[i]->state);
                 tasks[i]->elapsedTime = 0;
             }
-            if (totalTimeElapsed == 6000) // speed up the game after __ seconds
-            {
-                led_ticker = 50;
-                newTimer = 1250;
-                task1.elapsedTime = 0;
-            }
             tasks[i]->elapsedTime += 1;
-            totalTimeElapsed += 1;
         }
         while (!TimerFlag)
         {
