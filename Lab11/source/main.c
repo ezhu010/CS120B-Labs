@@ -207,10 +207,7 @@ int main(void)
             PORTB = 1;
             totalTimeElapsed = 0;
         }
-        else if (column != 0xEF)
-        {
-            PORTB = 0;
-        }
+
         for (i = 0; i < numTasks; ++i)
         {
             if (tasks[i]->elapsedTime == tasks[i]->period)
