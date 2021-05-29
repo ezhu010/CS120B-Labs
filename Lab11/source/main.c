@@ -63,7 +63,7 @@ int LED_MATRIX(int state)
             column = 0x1E;
             count = 0;
         }
-        else if (count == led_tickerß && totalTimeElapsed)
+        else if (count == led_ticker && totalTimeElapsed)
         {
             column = ((column << 1) + 1);
             count = 0;
