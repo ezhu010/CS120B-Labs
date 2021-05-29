@@ -214,7 +214,7 @@ int main(void)
                 tasks[i]->state = tasks[i]->TickFct(tasks[i]->state);
                 tasks[i]->elapsedTime = 0;
             }
-            if (totalTimeElapsed == 30000)
+            if (totalTimeElapsed == 25000)
             {
                 task1.period = 5;
                 task2.period = 5;
