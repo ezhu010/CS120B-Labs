@@ -220,7 +220,7 @@ int main(void)
         }
         if (hit)
         {
-            TimerSet(3000);
+            TimerSet(300);
             hit = 0;
         }
 
