@@ -102,7 +102,7 @@ int PLAYER_SM(int state)
         {
             PORTB = 1;
         }
-        else
+        else if (column != 0xEF)
         {
             PORTB = 0;
         }
