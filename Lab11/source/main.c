@@ -40,6 +40,7 @@ unsigned char column = 0x1E;
 unsigned char row;
 int count = 0;
 int totalTimeElapsed = 0;
+int led_ticker = 120;
 int LED_MATRIX(int state)
 {
     count++;
@@ -51,18 +52,22 @@ int LED_MATRIX(int state)
         state = shift;
         break;
     case shift:
+        if (totalTimeElapsed == 1000) // speed up the game after __ seconds
+        {
+            task1.period = 2500;
+            led_ticker = 100;
+        }
         row = temp;
-        if (column == 0xEF && count == 120)
+        if (column == 0xEF && count == led_ticker && totalTimeElapsed)
         {
             column = 0x1E;
             count = 0;
         }
-        else if (count == 120)
+        else if (count == led_tickerß && totalTimeElapsed)
         {
             column = ((column << 1) + 1);
             count = 0;
         }
-
         break;
     }
     PORTC = row;
