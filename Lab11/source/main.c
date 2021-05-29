@@ -19,9 +19,9 @@ enum Random_States
 {
     random_init
 };
-int random_counter = 119;
+int random_counter = 1199;
 int temp = 0;
-int newTimer = 120;
+int newTimer = 1200;
 int totalTimeElapsed = 0;
 
 // This function gets the random variable to display for the row.
