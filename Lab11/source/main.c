@@ -19,9 +19,9 @@ enum Random_States
 {
     random_init
 };
-int random_counter = 2999;
+int random_counter = 599;
 int temp = 0;
-int newTimer = 3000;
+int newTimer = 600;
 int totalTimeElapsed = 0;
 
 // This function gets the random variable to display for the row.
@@ -50,7 +50,7 @@ enum LED_Matrix_States
 unsigned char column = 0x1E;
 unsigned char row;
 int count = 0;
-int led_ticker = 600;
+int led_ticker = 120;
 int LED_MATRIX(int state)
 {
     count++;
