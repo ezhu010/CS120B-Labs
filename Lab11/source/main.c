@@ -21,12 +21,13 @@ enum Random_States
 };
 int random_counter = 2999;
 int temp = 0;
+int newTimer = 3000;
 // This function gets the random variable to display for the row.
 
 int random_tick(int state)
 {
     random_counter++;
-    if (random_counter == 3000)
+    if (random_counter == newTimer)
     {
         switch (state)
         {
@@ -215,6 +216,7 @@ int main(void)
             if (totalTimeElapsed == 5000) // speed up the game after __ seconds
             {
                 led_ticker = 50;
+                newTimer = 1250;
             }
             tasks[i]->elapsedTime += 1;
             totalTimeElapsed += 1;
