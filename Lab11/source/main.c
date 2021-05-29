@@ -229,6 +229,7 @@ int main(void)
 
         if (totalTimeElapsed == 6000)
         {
+            random_counter = 599;
             task2.period = 3;
             newTimer = 180;
         }
