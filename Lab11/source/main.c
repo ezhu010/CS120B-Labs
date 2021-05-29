@@ -215,7 +215,6 @@ int main(void)
             newTimer = 600;
             totalTimeElapsed = 0;
             random_counter = 599;
-
             lives = 1;
         }
         for (i = 0; i < numTasks; ++i)
@@ -230,7 +229,7 @@ int main(void)
 
         if (totalTimeElapsed == 6000)
         {
-            random_counter = 599;
+            random_counter = 179;
             task2.period = 3;
             newTimer = 180;
         }
