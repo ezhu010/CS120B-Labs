@@ -19,14 +19,20 @@ enum Random_States
 {
     random_init
 };
+int random_counter = 0;
 int temp = 0;
 int random_tick(int state)
 {
-    switch (state)
+    random_counter++;
+    if (random_counter == 3000)
     {
-    case random_init:
-        temp = rand() % 255 + 1;
-        break;
+        switch (state)
+        {
+        case random_init:
+            temp = rand() % 255 + 1;
+            break;
+        }
+        random_counter = 0;
     }
     return state;
 }
@@ -174,7 +180,7 @@ int main(void)
     const unsigned short numTasks = sizeof(tasks) / sizeof(task *);
     const char start = 0;
     task1.state = start;
-    task1.period = 3000;
+    task1.period = 1;
     task1.elapsedTime = task1.period;
     task1.TickFct = &random_tick;
 
@@ -204,11 +210,11 @@ int main(void)
                 tasks[i]->state = tasks[i]->TickFct(tasks[i]->state);
                 tasks[i]->elapsedTime = 0;
             }
-            if (totalTimeElapsed == 6000) // speed up the game after __ seconds
-            {
-                task1.period = 1250;
-                led_ticker = 50;
-            }
+            // if (totalTimeElapsed == 6000) // speed up the game after __ seconds
+            // {
+            //     task1.period = 1250;
+            //     led_ticker = 50;
+            // }
             tasks[i]->elapsedTime += 1;
             totalTimeElapsed += 1;
         }
