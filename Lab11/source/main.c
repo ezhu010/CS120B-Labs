@@ -14,6 +14,7 @@ typedef struct task
     unsigned long elapsedTime; //Time elapsed since last task tick
     int (*TickFct)(int);       //Task tick function
 } task;
+int totalTimeElapsed = 0;
 
 enum Random_States
 {
@@ -99,7 +100,9 @@ int PLAYER_SM(int state)
         }
         else if ((player & temp) > 0 && column == 0xEF)
         {
-            hit = 1;
+            task2.period = 10;
+            totalTimeElapsed = 0;
+            newTimer = 600;
             PORTB = 1;
         }
         else if (column != 0xEF)
@@ -181,7 +184,6 @@ int main(void)
     PORTD = 0x00;
     DDRC = 0xFF;
     PORTC = 0x00;
-    int totalTimeElapsed = 0;
 
     const unsigned short numTasks = sizeof(tasks) / sizeof(task *);
     const char start = 0;
@@ -218,11 +220,6 @@ int main(void)
             }
             tasks[i]->elapsedTime += 1;
         }
-        if (hit)
-        {
-            TimerSet(300);
-            hit = 0;
-        }
 
         if (totalTimeElapsed == 6000)
         {
@@ -235,6 +232,5 @@ int main(void)
         {
         };
         TimerFlag = 0;
-        TimerSet(1);
     }
 }
