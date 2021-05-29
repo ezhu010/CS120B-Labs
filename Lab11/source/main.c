@@ -86,6 +86,7 @@ enum PLAYER_STATES
 };
 int counter2 = 0;
 int player = 0x10;
+int lives = 1;
 int PLAYER_SM(int state)
 {
     counter2++;
@@ -100,6 +101,7 @@ int PLAYER_SM(int state)
         }
         else if ((player & temp) > 0 && column == 0xEF)
         {
+            lives--;
             PORTB = 1;
         }
         else if (column != 0xEF)
@@ -207,7 +209,12 @@ int main(void)
     unsigned short i;
     while (1)
     {
-
+        if (lives == 0)
+        {
+            task2.period = 10;
+            newTimer = 600;
+            totalTimeElapsed = 0;
+        }
         for (i = 0; i < numTasks; ++i)
         {
             if (tasks[i]->elapsedTime == tasks[i]->period)
