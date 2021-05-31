@@ -215,7 +215,7 @@ int main(void)
             newTimer = 600;
             totalTimeElapsed = 0;
             random_counter = 599;
-            lives = 1;
+            lives = 3;
         }
         for (i = 0; i < numTasks; ++i)
         {
