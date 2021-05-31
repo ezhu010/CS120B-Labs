@@ -86,7 +86,7 @@ enum PLAYER_STATES
 };
 int counter2 = 0;
 int player = 0x10;
-int lives = 1;
+int lives = 3;
 int PLAYER_SM(int state)
 {
     counter2++;
@@ -102,11 +102,11 @@ int PLAYER_SM(int state)
         else if ((player & temp) > 0 && column == 0xEF)
         {
             lives--;
-            PORTB = 1;
+            PORTB = lives;
         }
         else if (column != 0xEF)
         {
-            PORTB = 0;
+            PORTB = lives;
         }
 
         else
